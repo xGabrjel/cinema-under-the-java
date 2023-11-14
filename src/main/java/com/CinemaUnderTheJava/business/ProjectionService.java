@@ -6,6 +6,7 @@ import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.mapper.ProjectionMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ProjectionService {
 
     private final ProjectionJpaRepository projectionJpaRepository;
@@ -23,6 +25,7 @@ public class ProjectionService {
     }
 
     public List<ProjectionResponseDto> getProjectionsByDate(LocalDate date) {
+        log.info("Getting projections by date: [%s]".formatted(date.toString()));
         return projectionJpaRepository.findByDate(date)
                 .stream()
                 .map(projectionMapper::entityToDto)
@@ -30,6 +33,7 @@ public class ProjectionService {
     }
 
     public List<ProjectionResponseDto> findAllProjections() {
+        log.info("Getting all projections!");
         return projectionJpaRepository.findAll()
                 .stream()
                 .map(projectionMapper::entityToDto)
