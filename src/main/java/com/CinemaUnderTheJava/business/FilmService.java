@@ -7,6 +7,7 @@ import com.cinemaUnderTheJava.database.mapper.FilmMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.FilmJpaRepository;
 import com.cinemaUnderTheJava.database.util.FilmCategory;
 import com.cinemaUnderTheJava.database.util.exceptions.DuplicateFilmException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,20 +24,25 @@ public class FilmService {
 
     public List<FilmResponseDto> getAllFilms() {
         log.info("Returning all films...");
-        return filmJpaRepository.findAll()
-                .stream()
+        List<FilmEntity> all = filmJpaRepository.findAll();
+        log.info("Found [%s] films".formatted(all.size()));
+
+        return all.stream()
                 .map(filmMapper::entityToDto)
                 .toList();
     }
 
     public List<FilmResponseDto> getFilmByCategory(FilmCategory filmCategory) {
         log.info("Getting film by category: [%s]".formatted(filmCategory));
-        return filmJpaRepository.findByCategory(filmCategory)
-                .stream()
+        List<FilmEntity> filmByCategory = filmJpaRepository.findByCategory(filmCategory);
+        log.info("Found [%s] films of [%s] category".formatted(filmByCategory.size(), filmCategory));
+
+        return filmByCategory.stream()
                 .map(filmMapper::entityToDto)
                 .toList();
     }
 
+    @Transactional
     public FilmEntity saveNewFilm(FilmRequestDto filmRequestDto) {
         filmJpaRepository.findByTitle(filmRequestDto.title()).ifPresent(existingFilm -> {
             throw new DuplicateFilmException(existingFilm.getTitle());
@@ -46,6 +52,7 @@ public class FilmService {
         return filmJpaRepository.save(filmMapper.dtoToEntity(filmRequestDto));
     }
 
+    @Transactional
     public void deleteFilm(Long id) {
         log.info("Deleting film with id: [%s]".formatted(id));
         FilmEntity film = filmJpaRepository.findById(id)
