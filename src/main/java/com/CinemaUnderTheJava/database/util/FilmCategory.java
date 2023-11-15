@@ -1,13 +1,13 @@
 package com.cinemaUnderTheJava.database.util;
 
 public enum FilmCategory {
-    ACTION,
-    COMEDY,
     DRAMA,
-    FANTASY,
+    ACTION,
     HORROR,
+    COMEDY,
+    FANTASY,
     MYSTERY,
     ROMANCE,
-    THRILLER,
     WESTERN,
+    THRILLER,
 }

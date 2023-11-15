@@ -20,10 +20,12 @@ public class ProjectionController {
 
     private final ProjectionService projectionService;
 
-    @PostMapping("/add")
+    @PostMapping("/add/{filmId}")
     public ResponseEntity<ProjectionEntity> saveProjection(
-            @RequestBody ProjectionRequestDto projectionRequestDto) {
-        return new ResponseEntity<>(projectionService.saveProjection(projectionRequestDto), HttpStatus.CREATED);
+            @RequestBody ProjectionRequestDto projectionRequestDto,
+            @PathVariable Long filmId
+    ) {
+        return new ResponseEntity<>(projectionService.saveProjection(projectionRequestDto, filmId), HttpStatus.CREATED);
     }
 
     @GetMapping()

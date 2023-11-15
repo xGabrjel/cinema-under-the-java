@@ -7,26 +7,30 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "ticket")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "ticket")
 public class TicketEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private String filmTitle;
+    private LocalDate projectionDate;
+    private LocalTime projectionTime;
+    private BigDecimal ticketPrice;
+    private int rowsNumber;
+    private int seatsInRow;
+    private int roomNumber;
+    private Long userId;
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
-    private String filmTitle;
-    private LocalDateTime screeningDate;
-    private Long screeningId;
-    private String cinemaRoomId;
-    private int rowNumber;
-    private int seatNumber;
-    private Long userId;
 }

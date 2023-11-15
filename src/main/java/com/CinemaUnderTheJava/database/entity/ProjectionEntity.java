@@ -11,11 +11,11 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Entity
-@Table(name = "projection")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "projection")
 public class ProjectionEntity {
 
     @Id
