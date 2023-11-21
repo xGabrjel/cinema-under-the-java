@@ -1,11 +1,10 @@
 package com.cinemaUnderTheJava.database.entity;
 
+import com.cinemaUnderTheJava.database.util.TicketCurrency;
 import com.cinemaUnderTheJava.database.util.TicketStatus;
+import com.cinemaUnderTheJava.database.util.TicketType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +13,7 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ticket")
@@ -33,4 +33,8 @@ public class TicketEntity {
     private Long userId;
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
+    @Enumerated(EnumType.STRING)
+    private TicketType ticketType;
+    @Enumerated(EnumType.STRING)
+    private TicketCurrency ticketCurrency;
 }
