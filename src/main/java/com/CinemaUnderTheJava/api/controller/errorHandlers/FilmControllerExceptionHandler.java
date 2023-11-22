@@ -1,14 +1,15 @@
 package com.cinemaUnderTheJava.api.controller.errorHandlers;
 
-import com.cinemaUnderTheJava.database.util.exceptions.DuplicateFilmException;
-import com.cinemaUnderTheJava.database.util.exceptions.FilmNotFoundException;
-import com.cinemaUnderTheJava.database.util.exceptions.InvalidFilmCategoryException;
+import com.cinemaUnderTheJava.business.exceptions.DuplicateFilmException;
+import com.cinemaUnderTheJava.business.exceptions.FilmNotFoundException;
+import com.cinemaUnderTheJava.business.exceptions.InvalidFilmCategoryException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
 @Slf4j
 @ControllerAdvice
 public class FilmControllerExceptionHandler {

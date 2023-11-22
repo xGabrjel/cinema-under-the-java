@@ -1,6 +1,6 @@
 package com.cinemaUnderTheJava.api.controller.errorHandlers;
 
-import com.cinemaUnderTheJava.database.util.exceptions.ProjectionNotFoundException;
+import com.cinemaUnderTheJava.business.exceptions.ProjectionNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

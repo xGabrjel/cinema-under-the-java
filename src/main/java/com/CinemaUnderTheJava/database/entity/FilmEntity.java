@@ -1,6 +1,6 @@
 package com.cinemaUnderTheJava.database.entity;
 
-import com.cinemaUnderTheJava.database.util.FilmCategory;
+import com.cinemaUnderTheJava.database.enums.FilmCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.cinemaUnderTheJava.database.repository.jpa;
 
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
-import com.cinemaUnderTheJava.database.util.FilmCategory;
+import com.cinemaUnderTheJava.database.enums.FilmCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

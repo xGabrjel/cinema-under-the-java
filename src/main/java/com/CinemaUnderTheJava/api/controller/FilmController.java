@@ -4,7 +4,7 @@ import com.cinemaUnderTheJava.api.dto.FilmRequestDto;
 import com.cinemaUnderTheJava.api.dto.FilmResponseDto;
 import com.cinemaUnderTheJava.business.FilmService;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
-import com.cinemaUnderTheJava.database.util.FilmCategory;
+import com.cinemaUnderTheJava.database.enums.FilmCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

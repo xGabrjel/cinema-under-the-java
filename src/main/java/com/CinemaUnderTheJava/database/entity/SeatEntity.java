@@ -1,6 +1,6 @@
 package com.cinemaUnderTheJava.database.entity;
 
-import com.cinemaUnderTheJava.database.util.SeatStatus;
+import com.cinemaUnderTheJava.database.enums.SeatStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

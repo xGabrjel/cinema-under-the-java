@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.database.util;
+package com.cinemaUnderTheJava.database.enums;
 
 public enum FilmCategory {
     DRAMA,

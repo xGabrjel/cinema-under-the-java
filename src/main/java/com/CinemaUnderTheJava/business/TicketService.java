@@ -1,13 +1,13 @@
 package com.cinemaUnderTheJava.business;
 
+import com.cinemaUnderTheJava.business.exceptions.ProjectionNotFoundException;
+import com.cinemaUnderTheJava.business.exceptions.ReservationNotAvailableException;
+import com.cinemaUnderTheJava.business.exceptions.TicketNotFoundException;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
+import com.cinemaUnderTheJava.database.enums.TicketStatus;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
 import com.cinemaUnderTheJava.database.repository.jpa.TicketJpaRepository;
-import com.cinemaUnderTheJava.database.util.TicketStatus;
-import com.cinemaUnderTheJava.database.util.exceptions.ProjectionNotFoundException;
-import com.cinemaUnderTheJava.database.util.exceptions.ReservationNotAvailableException;
-import com.cinemaUnderTheJava.database.util.exceptions.TicketNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import static com.cinemaUnderTheJava.business.ExceptionMessages.*;
 
 @Slf4j
 @Service
@@ -58,10 +60,7 @@ public class TicketService {
 
     @Transactional
     public void cancelTicket(Long ticketId) {
-        TicketEntity ticket = ticketJpaRepository.findById(ticketId)
-                .orElseThrow(() -> new TicketNotFoundException("Unable to locate the requested ticket in the system! Ticket id: [%s]"
-                        .formatted(ticketId)));
-
+        TicketEntity ticket = getTicketById(ticketId);
         ticket.setStatus(TicketStatus.CANCELLED);
         ticketJpaRepository.delete(ticket);
         log.info("Cancel Complete! The ticket has been cancelled. Details: [%s]".formatted(ticket));
@@ -69,14 +68,18 @@ public class TicketService {
 
     private void validateReservationTiming(ProjectionEntity projection) {
         if (projection.getDate().isAfter(LocalDate.now()) || Duration.between(projection.getTime(), LocalTime.now()).toMinutes() >= 15) {
-            throw new ReservationNotAvailableException("Reservation is no longer available!");
+            throw new ReservationNotAvailableException(RESERVATION_NOT_AVAILABLE);
         }
     }
 
     private ProjectionEntity getProjectionById(Long projectionId) {
         return projectionJpaRepository
                 .findById(projectionId)
-                .orElseThrow(() -> new ProjectionNotFoundException("The projection you were looking for was not found! Projection id: [%s]"
-                        .formatted(projectionId)));
+                .orElseThrow(() -> new ProjectionNotFoundException(PROJECTION_NOT_FOUND, projectionId));
+    }
+
+    private TicketEntity getTicketById(Long ticketId) {
+        return ticketJpaRepository.findById(ticketId)
+                .orElseThrow(() -> new TicketNotFoundException(TICKET_NOT_FOUND, ticketId));
     }
 }

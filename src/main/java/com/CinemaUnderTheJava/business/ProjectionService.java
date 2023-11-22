@@ -2,12 +2,12 @@ package com.cinemaUnderTheJava.business;
 
 import com.cinemaUnderTheJava.api.dto.ProjectionRequestDto;
 import com.cinemaUnderTheJava.api.dto.ProjectionResponseDto;
+import com.cinemaUnderTheJava.business.exceptions.FilmNotFoundException;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.mapper.ProjectionMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.FilmJpaRepository;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
-import com.cinemaUnderTheJava.database.util.exceptions.FilmNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +29,7 @@ public class ProjectionService {
     public ProjectionEntity saveProjection(ProjectionRequestDto projectionRequestDto, Long filmId) {
         log.info("Saving projection: [%s]".formatted(projectionRequestDto));
 
-        FilmEntity filmEntity = filmJpaRepository.findById(filmId)
-                .orElseThrow(() -> new FilmNotFoundException("the film you were looking for was not found! Film id: [%s]".formatted(filmId)));
-
+        FilmEntity filmEntity = getFilmById(filmId);
         ProjectionEntity projectionEntity = projectionMapper.dtoToEntity(projectionRequestDto);
         projectionEntity.setFilm(filmEntity);
         ProjectionEntity savedProjection = projectionJpaRepository.save(projectionEntity);
@@ -61,5 +59,10 @@ public class ProjectionService {
         return allProjections.stream()
                 .map(projectionMapper::entityToDto)
                 .toList();
+    }
+
+    private FilmEntity getFilmById(Long filmId) {
+        return filmJpaRepository.findById(filmId)
+                .orElseThrow(() -> new FilmNotFoundException(ExceptionMessages.FILM_NOT_FOUND, filmId));
     }
 }

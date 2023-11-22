@@ -1,7 +1,7 @@
 package com.cinemaUnderTheJava.api.controller.errorHandlers;
 
-import com.cinemaUnderTheJava.database.util.exceptions.ReservationNotAvailableException;
-import com.cinemaUnderTheJava.database.util.exceptions.TicketNotFoundException;
+import com.cinemaUnderTheJava.business.exceptions.ReservationNotAvailableException;
+import com.cinemaUnderTheJava.business.exceptions.TicketNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,6 +21,7 @@ public class TicketControllerExceptionHandler {
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.NOT_FOUND);
     }
+
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TicketNotFoundException.class)

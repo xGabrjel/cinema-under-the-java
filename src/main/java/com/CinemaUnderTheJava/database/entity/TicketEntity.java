@@ -1,8 +1,8 @@
 package com.cinemaUnderTheJava.database.entity;
 
-import com.cinemaUnderTheJava.database.util.TicketCurrency;
-import com.cinemaUnderTheJava.database.util.TicketStatus;
-import com.cinemaUnderTheJava.database.util.TicketType;
+import com.cinemaUnderTheJava.database.enums.TicketCurrency;
+import com.cinemaUnderTheJava.database.enums.TicketStatus;
+import com.cinemaUnderTheJava.database.enums.TicketType;
 import jakarta.persistence.*;
 import lombok.*;
 
