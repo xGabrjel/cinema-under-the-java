@@ -29,7 +29,8 @@ public class ProjectionService {
     public ProjectionEntity saveProjection(ProjectionRequestDto projectionRequestDto, Long filmId) {
         log.info("Saving projection: [%s]".formatted(projectionRequestDto));
 
-        FilmEntity filmEntity = filmJpaRepository.findById(filmId).orElseThrow(() -> new FilmNotFoundException(filmId));
+        FilmEntity filmEntity = filmJpaRepository.findById(filmId)
+                .orElseThrow(() -> new FilmNotFoundException("the film you were looking for was not found! Film id: [%s]".formatted(filmId)));
 
         ProjectionEntity projectionEntity = projectionMapper.dtoToEntity(projectionRequestDto);
         projectionEntity.setFilm(filmEntity);

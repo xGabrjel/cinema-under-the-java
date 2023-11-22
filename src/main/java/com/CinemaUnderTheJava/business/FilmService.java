@@ -7,6 +7,7 @@ import com.cinemaUnderTheJava.database.mapper.FilmMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.FilmJpaRepository;
 import com.cinemaUnderTheJava.database.util.FilmCategory;
 import com.cinemaUnderTheJava.database.util.exceptions.DuplicateFilmException;
+import com.cinemaUnderTheJava.database.util.exceptions.FilmNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,7 @@ public class FilmService {
     @Transactional
     public FilmEntity saveNewFilm(FilmRequestDto filmRequestDto) {
         filmJpaRepository.findByTitle(filmRequestDto.title()).ifPresent(existingFilm -> {
-            throw new DuplicateFilmException(existingFilm.getTitle());
+            throw new DuplicateFilmException("Sorry, a film with this title already exists! Title: [%s]".formatted(existingFilm.getTitle()));
         });
 
         log.info("New film is saved: [%s]".formatted(filmRequestDto));
@@ -55,8 +56,9 @@ public class FilmService {
     @Transactional
     public void deleteFilm(Long id) {
         log.info("Deleting film with id: [%s]".formatted(id));
-        FilmEntity film = filmJpaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No such film with id: [%s]".formatted(id)));
+        FilmEntity film = filmJpaRepository
+                .findById(id)
+                .orElseThrow(() -> new FilmNotFoundException("The film you were looking for was not found! Film id: [%s]".formatted(id)));
 
         filmJpaRepository.delete(film);
         log.info("Film with id: [%s], was deleted successfully!".formatted(id));

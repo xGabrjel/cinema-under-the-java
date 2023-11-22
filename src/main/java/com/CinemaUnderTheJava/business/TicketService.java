@@ -6,6 +6,8 @@ import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
 import com.cinemaUnderTheJava.database.repository.jpa.TicketJpaRepository;
 import com.cinemaUnderTheJava.database.util.TicketStatus;
 import com.cinemaUnderTheJava.database.util.exceptions.ProjectionNotFoundException;
+import com.cinemaUnderTheJava.database.util.exceptions.ReservationNotAvailableException;
+import com.cinemaUnderTheJava.database.util.exceptions.TicketNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +27,8 @@ public class TicketService {
 
     @Transactional
     public TicketEntity ticketReservation(Long projectionId) {
-
-        ProjectionEntity projection = projectionJpaRepository
-                .findById(projectionId)
-                .orElseThrow(() -> new ProjectionNotFoundException(projectionId));
-
-        validateBookingTiming(projection);
+        ProjectionEntity projection = getProjectionById(projectionId);
+        validateReservationTiming(projection);
         TicketEntity ticket = generateTicket(projection);
 
         ticketJpaRepository.save(ticket);
@@ -61,16 +59,24 @@ public class TicketService {
     @Transactional
     public void cancelTicket(Long ticketId) {
         TicketEntity ticket = ticketJpaRepository.findById(ticketId)
-                .orElseThrow(() -> new RuntimeException("Ticket not found. Unable to locate the requested ticket in the system."));
+                .orElseThrow(() -> new TicketNotFoundException("Unable to locate the requested ticket in the system! Ticket id: [%s]"
+                        .formatted(ticketId)));
 
         ticket.setStatus(TicketStatus.CANCELLED);
         ticketJpaRepository.delete(ticket);
         log.info("Cancel Complete! The ticket has been cancelled. Details: [%s]".formatted(ticket));
     }
 
-    private void validateBookingTiming(ProjectionEntity projection) {
+    private void validateReservationTiming(ProjectionEntity projection) {
         if (projection.getDate().isAfter(LocalDate.now()) || Duration.between(projection.getTime(), LocalTime.now()).toMinutes() >= 15) {
-            throw new RuntimeException("Booking a ticket is no longer available.");
+            throw new ReservationNotAvailableException("Reservation is no longer available!");
         }
+    }
+
+    private ProjectionEntity getProjectionById(Long projectionId) {
+        return projectionJpaRepository
+                .findById(projectionId)
+                .orElseThrow(() -> new ProjectionNotFoundException("The projection you were looking for was not found! Projection id: [%s]"
+                        .formatted(projectionId)));
     }
 }
