@@ -41,7 +41,7 @@ public class TicketService {
     private TicketEntity generateTicket(ProjectionEntity projection) {
         log.info("Generating new ticket for projection: [%S]".formatted(projection));
 
-        //TODO - need user and dto
+        //TODO - need user and dto 1/2
         return TicketEntity.builder()
 //                .name()
                 .filmTitle(projection.getFilm().getTitle())
