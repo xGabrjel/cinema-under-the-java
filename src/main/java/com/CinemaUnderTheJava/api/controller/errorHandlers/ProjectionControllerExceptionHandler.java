@@ -1,6 +1,7 @@
 package com.cinemaUnderTheJava.api.controller.errorHandlers;
 
 import com.cinemaUnderTheJava.business.exceptions.ProjectionNotFoundException;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,5 +20,14 @@ public class ProjectionControllerExceptionHandler {
         final String message = String.format("ProjectionNotFoundException occurred: [%s]", ex.getMessage());
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ValidationException.class)
+    public GenericExceptionResponse<String> handleValidationException(ValidationException ex) {
+        final String message = String.format("ValidationException occurred: [%s]", ex.getMessage());
+        log.error(message, ex);
+        return new GenericExceptionResponse<>(message, HttpStatus.CONFLICT);
     }
 }

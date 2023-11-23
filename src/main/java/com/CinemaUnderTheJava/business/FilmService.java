@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.cinemaUnderTheJava.business.ExceptionMessages.DUPLICATE_FILM;
-import static com.cinemaUnderTheJava.business.ExceptionMessages.FILM_NOT_FOUND;
+import static com.cinemaUnderTheJava.business.util.ExceptionMessages.DUPLICATE_FILM;
+import static com.cinemaUnderTheJava.business.util.ExceptionMessages.FILM_NOT_FOUND;
 
 
 @Slf4j
@@ -50,7 +50,7 @@ public class FilmService {
     @Transactional
     public FilmEntity saveNewFilm(FilmRequestDto filmRequestDto) {
         filmJpaRepository.findByTitle(filmRequestDto.title()).ifPresent(existingFilm -> {
-            throw new DuplicateFilmException(DUPLICATE_FILM, existingFilm.getTitle());
+            throw new DuplicateFilmException(DUPLICATE_FILM.getMessage(existingFilm.getTitle()));
         });
 
         log.info("New film is saved: [%s]".formatted(filmRequestDto));
@@ -69,6 +69,6 @@ public class FilmService {
     private FilmEntity getFilmById(Long id) {
         return filmJpaRepository
                 .findById(id)
-                .orElseThrow(() -> new FilmNotFoundException(FILM_NOT_FOUND, id));
+                .orElseThrow(() -> new FilmNotFoundException(FILM_NOT_FOUND.getMessage(id)));
     }
 }

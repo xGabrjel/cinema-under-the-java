@@ -13,11 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static com.cinemaUnderTheJava.business.ExceptionMessages.*;
+import static com.cinemaUnderTheJava.business.util.ExceptionMessages.*;
 
 @Slf4j
 @Service
@@ -67,19 +66,33 @@ public class TicketService {
     }
 
     private void validateReservationTiming(ProjectionEntity projection) {
-        if (projection.getDate().isAfter(LocalDate.now()) || Duration.between(projection.getTime(), LocalTime.now()).toMinutes() >= 15) {
-            throw new ReservationNotAvailableException(RESERVATION_NOT_AVAILABLE);
+        LocalDate currentDay = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        LocalDate projectionDate = projection.getDate();
+        LocalTime projectionTime = projection.getTime();
+
+        log.info("Current date: %s".formatted(currentDay));
+        log.info("Current time: %s".formatted(currentTime));
+        log.info("Projection date: %s".formatted(projectionDate));
+        log.info("Projection time: %s".formatted(projectionTime));
+
+        boolean isProjectionInPast = projectionDate.isBefore(currentDay) ||
+                (projectionDate.isEqual(currentDay) && projectionTime.isBefore(currentTime.plusMinutes(15)));
+
+        if (isProjectionInPast) {
+            throw new ReservationNotAvailableException(RESERVATION_NOT_AVAILABLE.getMessage());
         }
     }
 
     private ProjectionEntity getProjectionById(Long projectionId) {
         return projectionJpaRepository
                 .findById(projectionId)
-                .orElseThrow(() -> new ProjectionNotFoundException(PROJECTION_NOT_FOUND, projectionId));
+                .orElseThrow(() -> new ProjectionNotFoundException(PROJECTION_NOT_FOUND.getMessage(projectionId)));
     }
 
     private TicketEntity getTicketById(Long ticketId) {
         return ticketJpaRepository.findById(ticketId)
-                .orElseThrow(() -> new TicketNotFoundException(TICKET_NOT_FOUND, ticketId));
+                .orElseThrow(() -> new TicketNotFoundException(TICKET_NOT_FOUND.getMessage(ticketId)));
     }
 }
