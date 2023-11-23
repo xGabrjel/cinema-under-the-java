@@ -2,11 +2,11 @@ package com.cinemaUnderTheJava.business.exceptions;
 
 public class TicketNotFoundException extends RuntimeException {
 
-    public TicketNotFoundException(String message) {
+    public TicketNotFoundException(final String message) {
         super(message);
     }
 
-    public TicketNotFoundException(String message, Object... args) {
+    public TicketNotFoundException(final String message, final Object... args) {
         super(String.format(message, args));
     }
 }
