@@ -1,9 +1,9 @@
 package com.cinemaUnderTheJava.business;
 
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateFilmException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.FilmNotFoundException;
 import com.cinemaUnderTheJava.api.dto.FilmRequestDto;
 import com.cinemaUnderTheJava.api.dto.FilmResponseDto;
-import com.cinemaUnderTheJava.business.exceptions.DuplicateFilmException;
-import com.cinemaUnderTheJava.business.exceptions.FilmNotFoundException;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.enums.FilmCategory;
 import com.cinemaUnderTheJava.database.mapper.FilmMapper;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.cinemaUnderTheJava.business.util.ExceptionMessages.DUPLICATE_FILM;
-import static com.cinemaUnderTheJava.business.util.ExceptionMessages.FILM_NOT_FOUND;
+import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages.DUPLICATE_FILM;
+import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages.FILM_NOT_FOUND;
 
 
 @Slf4j

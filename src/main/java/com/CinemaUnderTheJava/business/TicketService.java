@@ -1,8 +1,8 @@
 package com.cinemaUnderTheJava.business;
 
-import com.cinemaUnderTheJava.business.exceptions.ProjectionNotFoundException;
-import com.cinemaUnderTheJava.business.exceptions.ReservationNotAvailableException;
-import com.cinemaUnderTheJava.business.exceptions.TicketNotFoundException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.ProjectionNotFoundException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.ReservationNotAvailableException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.TicketNotFoundException;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
 import com.cinemaUnderTheJava.database.enums.TicketStatus;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static com.cinemaUnderTheJava.business.util.ExceptionMessages.*;
+import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages.*;
 
 @Slf4j
 @Service

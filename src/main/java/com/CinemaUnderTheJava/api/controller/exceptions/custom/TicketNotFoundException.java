@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.business.exceptions;
+package com.cinemaUnderTheJava.api.controller.exceptions.custom;
 
 public class TicketNotFoundException extends RuntimeException {
 

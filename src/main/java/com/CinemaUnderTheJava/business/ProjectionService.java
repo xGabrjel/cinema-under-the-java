@@ -1,9 +1,9 @@
 package com.cinemaUnderTheJava.business;
 
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.FilmNotFoundException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.ProjectionNotFoundException;
 import com.cinemaUnderTheJava.api.dto.ProjectionRequestDto;
 import com.cinemaUnderTheJava.api.dto.ProjectionResponseDto;
-import com.cinemaUnderTheJava.business.exceptions.FilmNotFoundException;
-import com.cinemaUnderTheJava.business.exceptions.ProjectionNotFoundException;
 import com.cinemaUnderTheJava.business.util.ProjectionValidator;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.cinemaUnderTheJava.business.util.ExceptionMessages.FILM_NOT_FOUND;
-import static com.cinemaUnderTheJava.business.util.ExceptionMessages.PROJECTIONS_NOT_FOUND_WITH_DATE;
+import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages.FILM_NOT_FOUND;
+import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages.PROJECTIONS_NOT_FOUND_WITH_DATE;
 
 @Slf4j
 @Service

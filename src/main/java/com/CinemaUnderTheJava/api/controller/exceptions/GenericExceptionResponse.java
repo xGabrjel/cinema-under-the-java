@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.api.controller.errorHandlers;
+package com.cinemaUnderTheJava.api.controller.exceptions;
 
 import org.springframework.http.HttpStatus;
 

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.cinemaUnderTheJava.business.util.ExceptionMessages.*;
+import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages.*;
 
 @Component
 @AllArgsConstructor
@@ -21,40 +21,38 @@ public class ProjectionValidator {
 
     private final ProjectionJpaRepository projectionJpaRepository;
 
-    public void projectionInputValidation(ProjectionRequestDto projectionRequestDto, FilmEntity filmEntity) {
-        timeGapValidation(projectionRequestDto, filmEntity);
-        correctProjectionTimeValidation(projectionRequestDto);
-        totalDailyProjectionsValidation(projectionRequestDto);
+    public void projectionInputValidation(ProjectionRequestDto projection, FilmEntity film) {
+        timeGapValidation(projection, film);
+        correctProjectionTimeValidation(projection);
+        totalDailyProjectionsValidation(projection);
     }
 
-    private void timeGapValidation(ProjectionRequestDto projectionRequestDto, FilmEntity filmEntity) {
-        List<ProjectionEntity> sameDayProjections = projectionJpaRepository.findByDate(projectionRequestDto.date());
+    private void timeGapValidation(ProjectionRequestDto projection, FilmEntity film) {
+        List<ProjectionEntity> sameDayProjections = projectionJpaRepository.findByDate(projection.date());
 
         boolean timeGapTooSmall = sameDayProjections.stream()
-                .map(existingProjection -> Duration.between(existingProjection.getTime(), projectionRequestDto.time()).toMinutes())
-                .anyMatch(timeDifference -> Math.abs(timeDifference) < filmEntity.getFilmDurationInMinutes() + 20);
+                .map(existingProjection -> Duration.between(existingProjection.getTime(), projection.time()).toMinutes())
+                .anyMatch(timeDifference -> Math.abs(timeDifference) < film.getFilmDurationInMinutes() + 20);
 
         if (timeGapTooSmall) {
             throw new ValidationException(INSUFFICIENT_TIME_GAP.getMessage());
         }
     }
 
-    private void correctProjectionTimeValidation(ProjectionRequestDto projectionRequestDto) {
-        if (projectionRequestDto.date().isBefore(LocalDate.now()) ||
-                (projectionRequestDto.date().isEqual(LocalDate.now()) &&
-                        projectionRequestDto.time().isBefore(LocalTime.now()))) {
+    private void correctProjectionTimeValidation(ProjectionRequestDto projection) {
+        if (projection.date().isBefore(LocalDate.now()) ||
+                (projection.date().isEqual(LocalDate.now()) &&
+                        projection.time().isBefore(LocalTime.now()))) {
             throw new ValidationException(TOO_LATE_TO_SCHEDULE.getMessage());
         }
-
     }
 
-    private void totalDailyProjectionsValidation(ProjectionRequestDto projectionRequestDto) {
-        long size = projectionJpaRepository.findByDate(projectionRequestDto.date())
+    private void totalDailyProjectionsValidation(ProjectionRequestDto projection) {
+        long size = projectionJpaRepository.findByDate(projection.date())
                 .size();
 
         if (size >= 5) {
             throw new ValidationException(TOO_MANY_PROJECTIONS.getMessage(size));
         }
     }
-
 }
