@@ -3,6 +3,8 @@ package com.cinemaUnderTheJava.business;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.ProjectionNotFoundException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.ReservationNotAvailableException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.TicketNotFoundException;
+import com.cinemaUnderTheJava.api.dto.TicketReservationDto;
+import com.cinemaUnderTheJava.business.util.PriceCalculator;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
 import com.cinemaUnderTheJava.database.enums.TicketStatus;
@@ -25,35 +27,36 @@ public class TicketService {
 
     private final TicketJpaRepository ticketJpaRepository;
     private final ProjectionJpaRepository projectionJpaRepository;
+    private final PriceCalculator priceCalculator;
 
     @Transactional
-    public TicketEntity ticketReservation(Long projectionId) {
+    public TicketEntity reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto) {
         ProjectionEntity projection = getProjectionById(projectionId);
         validateReservationTiming(projection);
-        TicketEntity ticket = generateTicket(projection);
+        TicketEntity ticket = generateTicket(projection, ticketReservationDto);
 
         ticketJpaRepository.save(ticket);
         log.info("Reservation Complete! The ticket has been saved. Details: [%s]".formatted(ticket));
         return ticket;
     }
 
-    private TicketEntity generateTicket(ProjectionEntity projection) {
+    private TicketEntity generateTicket(ProjectionEntity projection, TicketReservationDto ticketReservationDto) {
         log.info("Generating new ticket for projection: [%S]".formatted(projection));
 
-        //TODO - need user and dto 1/2
+        //TODO - need user 1/2
         return TicketEntity.builder()
+//                .userId()
 //                .name()
                 .filmTitle(projection.getFilm().getTitle())
                 .projectionDate(projection.getDate())
                 .projectionTime(projection.getTime())
-//                .ticketPrice()
-//                .rowsNumber()
+                .ticketPrice(priceCalculator.calculatePriceForProjection(projection, ticketReservationDto))
+                .rowNumber(ticketReservationDto.rowNumber())
                 .roomNumber(1)
-//                .seatsInRow()
-//                .userId()
+                .seatInRow(ticketReservationDto.seatInRow())
                 .status(TicketStatus.ACTIVE)
-//                .ticketType()
-//                .ticketCurrency()
+                .ticketType(ticketReservationDto.ticketType())
+                .ticketCurrency(ticketReservationDto.ticketCurrency())
                 .build();
     }
 

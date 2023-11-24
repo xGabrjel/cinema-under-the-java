@@ -27,8 +27,8 @@ public class TicketEntity {
     private LocalDate projectionDate;
     private LocalTime projectionTime;
     private BigDecimal ticketPrice;
-    private int rowsNumber;
-    private int seatsInRow;
+    private int rowNumber;
+    private int seatInRow;
     private int roomNumber;
     private Long userId;
     @Enumerated(EnumType.STRING)
