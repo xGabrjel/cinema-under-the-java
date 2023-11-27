@@ -1,5 +1,6 @@
 package com.cinemaUnderTheJava.api.controller.exceptions;
 
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.AlreadyExistsException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.InvalidFilmCategoryException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
@@ -56,6 +57,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     public GenericExceptionResponse<String> handleValidationException(ValidationException ex) {
         final String message = String.format("ValidationException occurred: [%s]", ex.getMessage());
+        log.error(message, ex);
+        return new GenericExceptionResponse<>(message, HttpStatus.CONFLICT);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(AlreadyExistsException.class)
+    public GenericExceptionResponse<String> handleAlreadyExistsException(AlreadyExistsException ex) {
+        final String message = String.format("AlreadyExistsException occurred: [%s]", ex.getMessage());
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.CONFLICT);
     }

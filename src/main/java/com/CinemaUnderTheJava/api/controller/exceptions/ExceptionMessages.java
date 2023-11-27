@@ -14,7 +14,11 @@ public enum ExceptionMessages {
 
     INSUFFICIENT_TIME_GAP("Time gap is insufficient to schedule a new projection."),
     TOO_LATE_TO_SCHEDULE("It is not possible to schedule a new projection before the current time."),
-    TOO_MANY_PROJECTIONS("It is not possible to schedule another projection. Number of current projections: ");
+    TOO_MANY_PROJECTIONS("It is not possible to schedule another projection. Number of current projections: "),
+
+    PASSWORDS_DO_NOT_MATCH("The provided passwords do not match."),
+    EMAIL_IS_TAKEN("The email address is already in use. Email: "),
+    USER_NOT_FOUND("The user you were looking for was not found. User ID: ");
 
 
     private final String message;
