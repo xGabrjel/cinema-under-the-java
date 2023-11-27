@@ -1,13 +1,14 @@
 package com.cinemaUnderTheJava.business;
 
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.ProjectionNotFoundException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.ReservationNotAvailableException;
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.TicketNotFoundException;
 import com.cinemaUnderTheJava.api.dto.TicketReservationDto;
+import com.cinemaUnderTheJava.api.dto.TicketReservedDto;
 import com.cinemaUnderTheJava.business.util.PriceCalculator;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
 import com.cinemaUnderTheJava.database.enums.TicketStatus;
+import com.cinemaUnderTheJava.database.mapper.TicketMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
 import com.cinemaUnderTheJava.database.repository.jpa.TicketJpaRepository;
 import jakarta.transaction.Transactional;
@@ -28,16 +29,17 @@ public class TicketService {
     private final TicketJpaRepository ticketJpaRepository;
     private final ProjectionJpaRepository projectionJpaRepository;
     private final PriceCalculator priceCalculator;
+    private final TicketMapper ticketMapper;
 
     @Transactional
-    public TicketEntity reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto) {
+    public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto) {
         ProjectionEntity projection = getProjectionById(projectionId);
         validateReservationTiming(projection);
         TicketEntity ticket = generateTicket(projection, ticketReservationDto);
 
         ticketJpaRepository.save(ticket);
         log.info("Reservation Complete! The ticket has been saved. Details: [%s]".formatted(ticket));
-        return ticket;
+        return ticketMapper.entityToDto(ticket);
     }
 
     private TicketEntity generateTicket(ProjectionEntity projection, TicketReservationDto ticketReservationDto) {
@@ -91,11 +93,11 @@ public class TicketService {
     private ProjectionEntity getProjectionById(Long projectionId) {
         return projectionJpaRepository
                 .findById(projectionId)
-                .orElseThrow(() -> new ProjectionNotFoundException(PROJECTION_NOT_FOUND.getMessage(projectionId)));
+                .orElseThrow(() -> new NotFoundException(PROJECTION_NOT_FOUND.getMessage(projectionId)));
     }
 
     private TicketEntity getTicketById(Long ticketId) {
         return ticketJpaRepository.findById(ticketId)
-                .orElseThrow(() -> new TicketNotFoundException(TICKET_NOT_FOUND.getMessage(ticketId)));
+                .orElseThrow(() -> new NotFoundException(TICKET_NOT_FOUND.getMessage(ticketId)));
     }
 }

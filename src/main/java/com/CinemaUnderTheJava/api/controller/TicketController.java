@@ -1,8 +1,8 @@
 package com.cinemaUnderTheJava.api.controller;
 
 import com.cinemaUnderTheJava.api.dto.TicketReservationDto;
+import com.cinemaUnderTheJava.api.dto.TicketReservedDto;
 import com.cinemaUnderTheJava.business.TicketService;
-import com.cinemaUnderTheJava.database.entity.TicketEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class TicketController {
 
     //TODO - need user 2/2
     @PostMapping("/{projectionId}")
-    public ResponseEntity<TicketEntity> reserveTicket(
+    public ResponseEntity<TicketReservedDto> reserveTicket(
             @PathVariable Long projectionId,
             @RequestBody TicketReservationDto ticketReservationDto
             ) {

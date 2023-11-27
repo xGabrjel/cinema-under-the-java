@@ -1,6 +1,8 @@
 package com.cinemaUnderTheJava.api.controller.exceptions;
 
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.*;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.InvalidFilmCategoryException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,28 +34,19 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(FilmNotFoundException.class)
-    public GenericExceptionResponse<String> handleFilmNotFoundException(FilmNotFoundException ex) {
-        final String message = String.format("FilmNotFoundException occurred: [%s]", ex.getMessage());
-        log.error(message, ex);
-        return new GenericExceptionResponse<>(message, HttpStatus.NOT_FOUND);
-    }
-
-    @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(DuplicateFilmException.class)
-    public GenericExceptionResponse<String> handleDuplicateFilmException(DuplicateFilmException ex) {
-        final String message = String.format("DuplicateFilmException occurred: [%s]", ex.getMessage());
+    @ExceptionHandler(DuplicateException.class)
+    public GenericExceptionResponse<String> handleDuplicateException(DuplicateException ex) {
+        final String message = String.format("DuplicateException occurred: [%s]", ex.getMessage());
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.CONFLICT);
     }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ProjectionNotFoundException.class)
-    public GenericExceptionResponse<String> handleProjectionNotFoundException(ProjectionNotFoundException ex) {
-        final String message = String.format("ProjectionNotFoundException occurred: [%s]", ex.getMessage());
+    @ExceptionHandler(NotFoundException.class)
+    public GenericExceptionResponse<String> handleNotFoundException(NotFoundException ex) {
+        final String message = String.format("NotFoundException occurred: [%s]", ex.getMessage());
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.NOT_FOUND);
     }
@@ -66,23 +59,4 @@ public class GlobalExceptionHandler {
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.CONFLICT);
     }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(TicketNotFoundException.class)
-    public GenericExceptionResponse<String> handleTicketNotFoundException(TicketNotFoundException ex) {
-        final String message = String.format("ProjectionNotFoundException occurred: [%s]", ex.getMessage());
-        log.error(message, ex);
-        return new GenericExceptionResponse<>(message, HttpStatus.NOT_FOUND);
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(TicketNotFoundException.class)
-    public GenericExceptionResponse<String> handleReservationNotAvailableException(ReservationNotAvailableException ex) {
-        final String message = String.format("ProjectionNotFoundException occurred: [%s]", ex.getMessage());
-        log.error(message, ex);
-        return new GenericExceptionResponse<>(message, HttpStatus.BAD_REQUEST);
-    }
-
 }

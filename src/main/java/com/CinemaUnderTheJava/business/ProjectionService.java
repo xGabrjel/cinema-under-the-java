@@ -1,7 +1,6 @@
 package com.cinemaUnderTheJava.business;
 
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.FilmNotFoundException;
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.ProjectionNotFoundException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import com.cinemaUnderTheJava.api.dto.ProjectionRequestDto;
 import com.cinemaUnderTheJava.api.dto.ProjectionResponseDto;
 import com.cinemaUnderTheJava.business.util.ProjectionValidator;
@@ -55,7 +54,7 @@ public class ProjectionService {
         List<ProjectionEntity> projectionByDate = projectionJpaRepository.findByDate(date);
 
         if (projectionByDate.isEmpty()) {
-            throw new ProjectionNotFoundException(PROJECTIONS_NOT_FOUND_WITH_DATE.getMessage());
+            throw new NotFoundException(PROJECTIONS_NOT_FOUND_WITH_DATE.getMessage());
         }
 
         return projectionByDate.stream()
@@ -74,6 +73,6 @@ public class ProjectionService {
 
     private FilmEntity getFilmById(Long filmId) {
         return filmJpaRepository.findById(filmId)
-                .orElseThrow(() -> new FilmNotFoundException(FILM_NOT_FOUND.getMessage(filmId)));
+                .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(filmId)));
     }
 }

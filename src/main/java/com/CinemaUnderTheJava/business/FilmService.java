@@ -1,7 +1,7 @@
 package com.cinemaUnderTheJava.business;
 
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateFilmException;
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.FilmNotFoundException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateException;
+import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import com.cinemaUnderTheJava.api.dto.FilmRequestDto;
 import com.cinemaUnderTheJava.api.dto.FilmResponseDto;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
@@ -50,7 +50,7 @@ public class FilmService {
     @Transactional
     public FilmEntity saveNewFilm(FilmRequestDto filmRequestDto) {
         filmJpaRepository.findByTitle(filmRequestDto.title()).ifPresent(existingFilm -> {
-            throw new DuplicateFilmException(DUPLICATE_FILM.getMessage(existingFilm.getTitle()));
+            throw new DuplicateException(DUPLICATE_FILM.getMessage(existingFilm.getTitle()));
         });
 
         log.info("New film is saved: [%s]".formatted(filmRequestDto));
@@ -69,6 +69,6 @@ public class FilmService {
     private FilmEntity getFilmById(Long id) {
         return filmJpaRepository
                 .findById(id)
-                .orElseThrow(() -> new FilmNotFoundException(FILM_NOT_FOUND.getMessage(id)));
+                .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));
     }
 }
