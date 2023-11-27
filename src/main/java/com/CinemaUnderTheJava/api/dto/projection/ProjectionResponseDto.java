@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.api.dto;
+package com.cinemaUnderTheJava.api.dto.projection;
 
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 

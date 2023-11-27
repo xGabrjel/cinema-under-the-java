@@ -1,6 +1,6 @@
 package com.cinemaUnderTheJava.business.util;
 
-import com.cinemaUnderTheJava.api.dto.TicketReservationDto;
+import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.enums.TicketType;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.api.dto;
+package com.cinemaUnderTheJava.api.dto.film;
 
 import com.cinemaUnderTheJava.database.enums.FilmCategory;
 

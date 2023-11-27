@@ -2,9 +2,9 @@ package com.cinemaUnderTheJava.business;
 
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.AlreadyExistsException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
-import com.cinemaUnderTheJava.api.dto.NewUserDto;
-import com.cinemaUnderTheJava.api.dto.UserRequestDto;
-import com.cinemaUnderTheJava.api.dto.UserResponseDto;
+import com.cinemaUnderTheJava.api.dto.user.NewUserDto;
+import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
+import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
 import com.cinemaUnderTheJava.database.entity.UserEntity;
 import com.cinemaUnderTheJava.database.enums.ActivationStatus;
 import com.cinemaUnderTheJava.database.mapper.UserMapper;
@@ -38,6 +38,7 @@ public class UserService {
     }
 
     private UserEntity createUser(UserRequestDto userRequestDto) {
+        log.info("Creating new User data: [%s]".formatted(userRequestDto));
         return UserEntity.builder()
                 .firstName(userRequestDto.firstName())
                 .lastName(userRequestDto.lastName())
@@ -61,9 +62,14 @@ public class UserService {
         }
     }
 
-    public UserResponseDto findUserById(Long userId) {
+    public UserResponseDto findUserDtoById(Long userId) {
         UserEntity user = userJpaRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getMessage(), userId));
         return userMapper.entityToDto(user);
+    }
+
+    public UserEntity findUserById(Long userId) {
+        return userJpaRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getMessage(), userId));
     }
 }

@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.api.dto;
+package com.cinemaUnderTheJava.api.dto.user;
 
 public record NewUserDto(
         String firstName,

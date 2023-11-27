@@ -1,8 +1,8 @@
-package com.cinemaUnderTheJava.api.controller.exceptions;
+package com.cinemaUnderTheJava.api.controller;
 
-import com.cinemaUnderTheJava.api.dto.NewUserDto;
-import com.cinemaUnderTheJava.api.dto.UserRequestDto;
-import com.cinemaUnderTheJava.api.dto.UserResponseDto;
+import com.cinemaUnderTheJava.api.dto.user.NewUserDto;
+import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
+import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
 import com.cinemaUnderTheJava.business.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/registration")
-    public ResponseEntity<NewUserDto> registration(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<NewUserDto> registration(
+            @Valid @RequestBody UserRequestDto userRequestDto
+    ) {
         return new ResponseEntity<>(userService.registerUser(userRequestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> findByUserId(@PathVariable Long id) {
-        UserResponseDto userResponseDto = userService.findUserById(id);
+    public ResponseEntity<UserResponseDto> findByUserId(
+            @PathVariable Long id
+    ) {
+        UserResponseDto userResponseDto = userService.findUserDtoById(id);
         return ResponseEntity.ok(userResponseDto);
     }
 }

@@ -2,11 +2,12 @@ package com.cinemaUnderTheJava.business;
 
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.ReservationNotAvailableException;
-import com.cinemaUnderTheJava.api.dto.TicketReservationDto;
-import com.cinemaUnderTheJava.api.dto.TicketReservedDto;
+import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
+import com.cinemaUnderTheJava.api.dto.ticket.TicketReservedDto;
 import com.cinemaUnderTheJava.business.util.PriceCalculator;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
+import com.cinemaUnderTheJava.database.entity.UserEntity;
 import com.cinemaUnderTheJava.database.enums.TicketStatus;
 import com.cinemaUnderTheJava.database.mapper.TicketMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
@@ -30,25 +31,25 @@ public class TicketService {
     private final ProjectionJpaRepository projectionJpaRepository;
     private final PriceCalculator priceCalculator;
     private final TicketMapper ticketMapper;
+    private final UserService userService;
 
     @Transactional
-    public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto) {
+    public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto, Long userId) {
+        UserEntity user = userService.findUserById(userId);
         ProjectionEntity projection = getProjectionById(projectionId);
         validateReservationTiming(projection);
-        TicketEntity ticket = generateTicket(projection, ticketReservationDto);
+        TicketEntity ticket = generateTicket(projection, ticketReservationDto, user);
 
         ticketJpaRepository.save(ticket);
         log.info("Reservation Complete! The ticket has been saved. Details: [%s]".formatted(ticket));
         return ticketMapper.entityToDto(ticket);
     }
 
-    private TicketEntity generateTicket(ProjectionEntity projection, TicketReservationDto ticketReservationDto) {
-        log.info("Generating new ticket for projection: [%S]".formatted(projection));
-
-        //TODO - need user 1/2
+    private TicketEntity generateTicket(ProjectionEntity projection, TicketReservationDto ticketReservationDto, UserEntity user) {
+        log.info("Generating new ticket for projection: [%s]".formatted(projection));
         return TicketEntity.builder()
-//                .userId()
-//                .name()
+                .userId(user.getId())
+                .name(user.getFirstName().concat(" ").concat(user.getLastName()))
                 .filmTitle(projection.getFilm().getTitle())
                 .projectionDate(projection.getDate())
                 .projectionTime(projection.getTime())

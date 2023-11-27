@@ -1,7 +1,7 @@
 package com.cinemaUnderTheJava.api.controller;
 
-import com.cinemaUnderTheJava.api.dto.ProjectionRequestDto;
-import com.cinemaUnderTheJava.api.dto.ProjectionResponseDto;
+import com.cinemaUnderTheJava.api.dto.projection.ProjectionRequestDto;
+import com.cinemaUnderTheJava.api.dto.projection.ProjectionResponseDto;
 import com.cinemaUnderTheJava.business.ProjectionService;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,8 @@ public class ProjectionController {
 
     @GetMapping()
     public ResponseEntity<List<ProjectionResponseDto>> getProjectionsByDate(
-            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
         List<ProjectionResponseDto> result = projectionService.getProjectionsByDate(date);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

@@ -2,7 +2,6 @@ package com.cinemaUnderTheJava.api.controller.exceptions;
 
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.AlreadyExistsException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateException;
-import com.cinemaUnderTheJava.api.controller.exceptions.custom.InvalidFilmCategoryException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,15 +22,6 @@ public class GlobalExceptionHandler {
         final String message = String.format("ProjectionNotFoundException occurred: [%s]", ex.getMessage());
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(InvalidFilmCategoryException.class)
-    public GenericExceptionResponse<String> handleInvalidFilmCategoryException(InvalidFilmCategoryException ex) {
-        final String message = String.format("InvalidFilmCategory occurred: [%s]", ex.getMessage());
-        log.error(message, ex);
-        return new GenericExceptionResponse<>(message, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseBody

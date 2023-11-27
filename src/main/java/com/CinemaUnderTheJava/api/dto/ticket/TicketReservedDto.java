@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.api.dto;
+package com.cinemaUnderTheJava.api.dto.ticket;
 
 import com.cinemaUnderTheJava.database.enums.TicketStatus;
 

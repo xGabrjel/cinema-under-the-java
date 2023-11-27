@@ -1,7 +1,7 @@
 package com.cinemaUnderTheJava.api.controller;
 
-import com.cinemaUnderTheJava.api.dto.FilmRequestDto;
-import com.cinemaUnderTheJava.api.dto.FilmResponseDto;
+import com.cinemaUnderTheJava.api.dto.film.FilmRequestDto;
+import com.cinemaUnderTheJava.api.dto.film.FilmResponseDto;
 import com.cinemaUnderTheJava.business.FilmService;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.enums.FilmCategory;
@@ -26,18 +26,24 @@ public class FilmController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<List<FilmResponseDto>> getFilmByCategory(@RequestParam("category") FilmCategory filmCategory) {
+    public ResponseEntity<List<FilmResponseDto>> getFilmByCategory(
+            @RequestParam("category") FilmCategory filmCategory
+    ) {
         List<FilmResponseDto> filmsByCategory = filmService.getFilmByCategory(filmCategory);
         return ResponseEntity.status(HttpStatus.OK).body(filmsByCategory);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<FilmEntity> saveNewFilm(@RequestBody FilmRequestDto filmRequestDto) {
+    public ResponseEntity<FilmEntity> saveNewFilm(
+            @RequestBody FilmRequestDto filmRequestDto
+    ) {
         return new ResponseEntity<>(filmService.saveNewFilm(filmRequestDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteFilm(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFilm(
+            @PathVariable Long id
+    ) {
         filmService.deleteFilm(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

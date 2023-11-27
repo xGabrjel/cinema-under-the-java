@@ -1,4 +1,4 @@
-package com.cinemaUnderTheJava.api.dto;
+package com.cinemaUnderTheJava.api.dto.user;
 
 import com.cinemaUnderTheJava.database.enums.UserRole;
 import jakarta.validation.constraints.Email;

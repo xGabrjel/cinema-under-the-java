@@ -2,8 +2,8 @@ package com.cinemaUnderTheJava.business;
 
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.DuplicateException;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
-import com.cinemaUnderTheJava.api.dto.FilmRequestDto;
-import com.cinemaUnderTheJava.api.dto.FilmResponseDto;
+import com.cinemaUnderTheJava.api.dto.film.FilmRequestDto;
+import com.cinemaUnderTheJava.api.dto.film.FilmResponseDto;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.enums.FilmCategory;
 import com.cinemaUnderTheJava.database.mapper.FilmMapper;

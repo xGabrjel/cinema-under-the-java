@@ -1,6 +1,6 @@
 package com.cinemaUnderTheJava.database.mapper;
 
-import com.cinemaUnderTheJava.api.dto.TicketReservedDto;
+import com.cinemaUnderTheJava.api.dto.ticket.TicketReservedDto;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

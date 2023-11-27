@@ -1,6 +1,6 @@
 package com.cinemaUnderTheJava.business.util;
 
-import com.cinemaUnderTheJava.api.dto.ProjectionRequestDto;
+import com.cinemaUnderTheJava.api.dto.projection.ProjectionRequestDto;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;

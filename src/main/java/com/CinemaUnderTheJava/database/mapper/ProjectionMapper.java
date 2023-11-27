@@ -1,7 +1,7 @@
 package com.cinemaUnderTheJava.database.mapper;
 
-import com.cinemaUnderTheJava.api.dto.ProjectionRequestDto;
-import com.cinemaUnderTheJava.api.dto.ProjectionResponseDto;
+import com.cinemaUnderTheJava.api.dto.projection.ProjectionRequestDto;
+import com.cinemaUnderTheJava.api.dto.projection.ProjectionResponseDto;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

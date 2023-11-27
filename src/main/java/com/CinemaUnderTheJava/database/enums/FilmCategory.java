@@ -9,5 +9,5 @@ public enum FilmCategory {
     MYSTERY,
     ROMANCE,
     WESTERN,
-    THRILLER,
+    THRILLER
 }
