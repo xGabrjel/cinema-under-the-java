@@ -21,7 +21,7 @@ public class QuickResponseCodeCreator {
     public Element generateQuickResponseCode(String email, TicketEntity ticket) throws BadElementException, IOException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", Locale.getDefault());
 
-        String content = String.format("%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s%s\n%s%s",
+        String content = String.format("%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s\n%s%s %s\n%s%s",
                 resourceBundle.getString("ticket.name"), ticket.getName(),
                 resourceBundle.getString("ticket.film"), ticket.getFilmTitle(),
                 resourceBundle.getString("ticket.date"), ticket.getProjectionDate(),
