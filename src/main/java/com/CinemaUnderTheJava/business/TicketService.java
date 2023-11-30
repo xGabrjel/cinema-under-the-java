@@ -4,6 +4,7 @@ import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.ReservationNotAvailableException;
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservedDto;
+import com.cinemaUnderTheJava.business.util.EmailTicketSender;
 import com.cinemaUnderTheJava.business.util.PriceCalculator;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
@@ -12,6 +13,7 @@ import com.cinemaUnderTheJava.database.enums.TicketStatus;
 import com.cinemaUnderTheJava.database.mapper.TicketMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
 import com.cinemaUnderTheJava.database.repository.jpa.TicketJpaRepository;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,15 +34,17 @@ public class TicketService {
     private final PriceCalculator priceCalculator;
     private final TicketMapper ticketMapper;
     private final UserService userService;
+    private final EmailTicketSender emailTicketSender;
 
     @Transactional
-    public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto, Long userId) {
+    public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto, Long userId) throws MessagingException {
         UserEntity user = userService.findUserById(userId);
         ProjectionEntity projection = getProjectionById(projectionId);
         validateReservationTiming(projection);
         TicketEntity ticket = generateTicket(projection, ticketReservationDto, user);
 
         ticketJpaRepository.save(ticket);
+        emailTicketSender.sendEmailWithTicket(user.getEmail(), ticket);
         log.info("Reservation Complete! The ticket has been saved. Details: [%s]".formatted(ticket));
         return ticketMapper.entityToDto(ticket);
     }

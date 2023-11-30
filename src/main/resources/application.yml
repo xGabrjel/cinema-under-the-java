@@ -41,3 +41,6 @@ jasypt:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     algorithm: PBEWithMD5AndDES
     password: secretkey
+
+verification:
+  link: http://localhost:8080/users/confirm?token=

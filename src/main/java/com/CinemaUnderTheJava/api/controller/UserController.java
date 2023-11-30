@@ -4,6 +4,7 @@ import com.cinemaUnderTheJava.api.dto.user.NewUserDto;
 import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
 import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
 import com.cinemaUnderTheJava.business.UserService;
+import com.cinemaUnderTheJava.business.util.UserVerification;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final UserVerification userVerification;
 
     @PostMapping("/registration")
     public ResponseEntity<NewUserDto> registration(
@@ -30,5 +32,13 @@ public class UserController {
     ) {
         UserResponseDto userResponseDto = userService.findUserDtoById(id);
         return ResponseEntity.ok(userResponseDto);
+    }
+
+    @GetMapping("/activate")
+    public ResponseEntity<String> activateUserAccount(
+            @RequestParam("token") String token
+    ) {
+        userVerification.activateUserAccount(token);
+        return ResponseEntity.ok("Activation has benn completed!");
     }
 }
