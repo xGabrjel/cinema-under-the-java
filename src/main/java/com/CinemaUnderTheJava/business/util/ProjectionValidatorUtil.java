@@ -17,7 +17,7 @@ import static com.cinemaUnderTheJava.api.controller.exceptions.ExceptionMessages
 
 @Component
 @AllArgsConstructor
-public class ProjectionValidator {
+public class ProjectionValidatorUtil {
 
     private final ProjectionJpaRepository projectionJpaRepository;
 

@@ -5,7 +5,7 @@ import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException
 import com.cinemaUnderTheJava.api.dto.user.NewUserDto;
 import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
 import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
-import com.cinemaUnderTheJava.business.util.UserVerification;
+import com.cinemaUnderTheJava.business.util.UserVerificationUtil;
 import com.cinemaUnderTheJava.database.entity.UserEntity;
 import com.cinemaUnderTheJava.database.enums.ActivationStatus;
 import com.cinemaUnderTheJava.database.mapper.UserMapper;
@@ -25,7 +25,7 @@ public class UserService {
 
     private final UserJpaRepository userJpaRepository;
     private final UserMapper userMapper;
-    private final UserVerification userVerification;
+    private final UserVerificationUtil userVerification;
 
     @Transactional
     public NewUserDto registerUser(UserRequestDto userRequestDto) {

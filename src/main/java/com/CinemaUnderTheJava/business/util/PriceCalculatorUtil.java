@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 
-import static com.cinemaUnderTheJava.business.util.PriceCalculator.TicketPrice.*;
+import static com.cinemaUnderTheJava.business.util.PriceCalculatorUtil.TicketPrice.*;
 
 @Component
 @AllArgsConstructor
-public class PriceCalculator {
+public class PriceCalculatorUtil {
 
     public BigDecimal calculatePriceForProjection(ProjectionEntity projection, TicketReservationDto ticketReservationDto) {
         return BigDecimal.valueOf(verifyStudentDiscount(projection, ticketReservationDto));

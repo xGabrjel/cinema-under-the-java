@@ -3,7 +3,7 @@ package com.cinemaUnderTheJava.business;
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException;
 import com.cinemaUnderTheJava.api.dto.projection.ProjectionRequestDto;
 import com.cinemaUnderTheJava.api.dto.projection.ProjectionResponseDto;
-import com.cinemaUnderTheJava.business.util.ProjectionValidator;
+import com.cinemaUnderTheJava.business.util.ProjectionValidatorUtil;
 import com.cinemaUnderTheJava.database.entity.FilmEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.mapper.ProjectionMapper;
@@ -28,7 +28,7 @@ public class ProjectionService {
     private final ProjectionJpaRepository projectionJpaRepository;
     private final ProjectionMapper projectionMapper;
     private final FilmJpaRepository filmJpaRepository;
-    private final ProjectionValidator projectionValidator;
+    private final ProjectionValidatorUtil projectionValidator;
 
     @Transactional
     public ProjectionEntity saveProjection(ProjectionRequestDto projectionRequestDto, Long filmId) {

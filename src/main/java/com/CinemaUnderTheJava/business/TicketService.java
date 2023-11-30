@@ -4,8 +4,8 @@ import com.cinemaUnderTheJava.api.controller.exceptions.custom.NotFoundException
 import com.cinemaUnderTheJava.api.controller.exceptions.custom.ReservationNotAvailableException;
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservedDto;
-import com.cinemaUnderTheJava.business.util.EmailTicketSender;
-import com.cinemaUnderTheJava.business.util.PriceCalculator;
+import com.cinemaUnderTheJava.business.util.EmailTicketSenderUtil;
+import com.cinemaUnderTheJava.business.util.PriceCalculatorUtil;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.entity.TicketEntity;
 import com.cinemaUnderTheJava.database.entity.UserEntity;
@@ -31,10 +31,10 @@ public class TicketService {
 
     private final TicketJpaRepository ticketJpaRepository;
     private final ProjectionJpaRepository projectionJpaRepository;
-    private final PriceCalculator priceCalculator;
+    private final PriceCalculatorUtil priceCalculator;
     private final TicketMapper ticketMapper;
     private final UserService userService;
-    private final EmailTicketSender emailTicketSender;
+    private final EmailTicketSenderUtil emailTicketSender;
 
     @Transactional
     public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto, Long userId) throws MessagingException {

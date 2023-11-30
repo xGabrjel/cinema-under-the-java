@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,12 +19,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 @Slf4j
-@Service
+@Component
 @AllArgsConstructor
-public class EmailTicketSender {
+public class EmailTicketSenderUtil {
 
     private final JavaMailSender javaMailSender;
-    private final QuickResponseCodeCreator qr;
+    private final QuickResponseUtil qr;
 
     public void sendEmailWithTicket(String email, TicketEntity ticket) throws MessagingException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", Locale.getDefault());

@@ -7,18 +7,18 @@ import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 @Slf4j
-@Service
+@Component
 @AllArgsConstructor
-public class UserVerification {
+public class UserVerificationUtil {
 
     private final UserJpaRepository userJpaRepository;
-    private final EmailVerification emailVerification;
+    private final EmailVerificationUtil emailVerification;
     @Value("$verification.link")
     private String verificationLink;
 
@@ -39,12 +39,13 @@ public class UserVerification {
     }
 
     public void activateUserAccount(String token) {
-        userJpaRepository.findByActivationToken(token).ifPresentOrElse(user -> {
-            user.setActivationStatus(ActivationStatus.ACTIVE);
-            user.setActivationToken(null);
-            userJpaRepository.save(user);
-            log.info("User Account Verified!");
-        },
-                () -> log.error("User not found for activation token: [%s]".formatted(token)));
+        userJpaRepository.findByActivationToken(token)
+                .ifPresentOrElse(user -> {
+                            user.setActivationStatus(ActivationStatus.ACTIVE);
+                            user.setActivationToken(null);
+                            userJpaRepository.save(user);
+                            log.info("User Account Verified!");
+                        },
+                        () -> log.error("User not found for activation token: [%s]".formatted(token)));
     }
 }

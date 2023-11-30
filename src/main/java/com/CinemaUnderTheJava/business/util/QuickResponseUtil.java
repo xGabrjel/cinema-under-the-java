@@ -7,16 +7,16 @@ import com.itextpdf.text.Image;
 import lombok.AllArgsConstructor;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-@Service
+@Component
 @AllArgsConstructor
-public class QuickResponseCodeCreator {
+public class QuickResponseUtil {
 
     public Element generateQuickResponseCode(String email, TicketEntity ticket) throws BadElementException, IOException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", Locale.getDefault());

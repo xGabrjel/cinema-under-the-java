@@ -5,15 +5,15 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-@Service
+@Component
 @AllArgsConstructor
-public class EmailVerification {
+public class EmailVerificationUtil {
 
     private final JavaMailSender javaMailSender;
 

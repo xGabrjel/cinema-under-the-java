@@ -4,7 +4,7 @@ import com.cinemaUnderTheJava.api.dto.user.NewUserDto;
 import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
 import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
 import com.cinemaUnderTheJava.business.UserService;
-import com.cinemaUnderTheJava.business.util.UserVerification;
+import com.cinemaUnderTheJava.business.util.UserVerificationUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final UserVerification userVerification;
+    private final UserVerificationUtil userVerification;
 
     @PostMapping("/registration")
     public ResponseEntity<NewUserDto> registration(
