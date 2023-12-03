@@ -42,11 +42,18 @@ public class SeatService {
 
             switch (status) {
                 case AVAILABLE -> {
+                    log.info("Seat available!");
                     seat.setStatus(SeatStatus.TAKEN);
                     seatJpaRepository.save(seat);
                 }
-                case TAKEN -> throw new AlreadyExistsException(SEAT_IS_TAKEN.getMessage());
-                default -> throw new NotFoundException(SEAT_NOT_FOUND.getMessage(rowNumber, seatInRow));
+                case TAKEN -> {
+                    log.info("Seat taken!");
+                    throw new AlreadyExistsException(SEAT_IS_TAKEN.getMessage());
+                }
+                default -> {
+                    log.info("Seat unknown!");
+                    throw new NotFoundException(SEAT_NOT_FOUND.getMessage(rowNumber, seatInRow));
+                }
             }
         } else {
             throw new NotFoundException(SEAT_NOT_FOUND.getMessage(rowNumber, seatInRow));

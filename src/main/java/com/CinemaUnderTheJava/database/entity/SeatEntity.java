@@ -1,6 +1,7 @@
 package com.cinemaUnderTheJava.database.entity;
 
 import com.cinemaUnderTheJava.database.enums.SeatStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class SeatEntity {
     private SeatStatus status;
     @ManyToOne
     @JoinColumn(name = "projection_id")
+    @JsonIgnore
     private ProjectionEntity projection;
 }

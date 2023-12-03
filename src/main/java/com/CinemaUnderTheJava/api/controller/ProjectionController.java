@@ -2,8 +2,8 @@ package com.cinemaUnderTheJava.api.controller;
 
 import com.cinemaUnderTheJava.api.dto.projection.ProjectionRequestDto;
 import com.cinemaUnderTheJava.api.dto.projection.ProjectionResponseDto;
+import com.cinemaUnderTheJava.api.dto.seat.AvailableSeatsDto;
 import com.cinemaUnderTheJava.business.ProjectionService;
-import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class ProjectionController {
     private final ProjectionService projectionService;
 
     @PostMapping("/add/{filmId}")
-    public ResponseEntity<ProjectionEntity> saveProjection(
+    public ResponseEntity<ProjectionResponseDto> saveProjection(
             @RequestBody ProjectionRequestDto projectionRequestDto,
             @PathVariable Long filmId
     ) {
@@ -38,7 +38,15 @@ public class ProjectionController {
 
     @GetMapping("/all")
     public ResponseEntity<List<ProjectionResponseDto>> findAll() {
-        List<ProjectionResponseDto> result = projectionService.findAllProjections();
+        List<ProjectionResponseDto> result = projectionService.getAllProjections();
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<AvailableSeatsDto> getAvailableSeats(
+            @PathVariable Long id
+    ) {
+        AvailableSeatsDto availableSeats = projectionService.getAvailableSeats(id);
+        return ResponseEntity.ok(availableSeats);
     }
 }

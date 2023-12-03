@@ -28,20 +28,20 @@ public class FilmService {
     private final FilmMapper filmMapper;
 
     public List<FilmResponseDto> getAllFilms() {
-        log.info("Returning all films...");
         List<FilmEntity> all = filmJpaRepository.findAll();
-        log.info("Found [%s] films".formatted(all.size()));
 
+        log.info("Returning all films...");
+        log.info("Found [%s] films".formatted(all.size()));
         return all.stream()
                 .map(filmMapper::entityToDto)
                 .toList();
     }
 
     public List<FilmResponseDto> getFilmByCategory(FilmCategory filmCategory) {
-        log.info("Getting film by category: [%s]".formatted(filmCategory));
         List<FilmEntity> filmByCategory = filmJpaRepository.findByCategory(filmCategory);
-        log.info("Found [%s] films of [%s] category".formatted(filmByCategory.size(), filmCategory));
 
+        log.info("Getting film by category: [%s]".formatted(filmCategory));
+        log.info("Found [%s] films of [%s] category".formatted(filmByCategory.size(), filmCategory));
         return filmByCategory.stream()
                 .map(filmMapper::entityToDto)
                 .toList();
@@ -59,9 +59,9 @@ public class FilmService {
 
     @Transactional
     public void deleteFilm(Long id) {
-        log.info("Deleting film with id: [%s]".formatted(id));
         FilmEntity film = getFilmById(id);
 
+        log.info("Deleting film with id: [%s]".formatted(id));
         filmJpaRepository.delete(film);
         log.info("Film with id: [%s], was deleted successfully!".formatted(id));
     }
