@@ -18,7 +18,10 @@ public enum ExceptionMessages {
 
     PASSWORDS_DO_NOT_MATCH("The provided passwords do not match."),
     EMAIL_IS_TAKEN("The email address is already in use. Email: "),
-    USER_NOT_FOUND("The user you were looking for was not found. User ID: ");
+    USER_NOT_FOUND("The user you were looking for was not found. User ID: "),
+
+    SEAT_NOT_FOUND("The seat you were looking for was not found. Row and Seat: "),
+    SEAT_IS_TAKEN("The seat you were looking for was already taken.");
 
 
     private final String message;

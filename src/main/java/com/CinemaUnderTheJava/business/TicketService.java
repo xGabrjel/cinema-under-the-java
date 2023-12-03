@@ -35,6 +35,7 @@ public class TicketService {
     private final TicketMapper ticketMapper;
     private final UserService userService;
     private final EmailTicketSenderUtil emailTicketSender;
+    private final SeatService seatService;
 
     @Transactional
     public TicketReservedDto reserveTicket(Long projectionId, TicketReservationDto ticketReservationDto, Long userId) throws MessagingException {
@@ -42,6 +43,7 @@ public class TicketService {
         ProjectionEntity projection = getProjectionById(projectionId);
         validateReservationTiming(projection);
         TicketEntity ticket = generateTicket(projection, ticketReservationDto, user);
+        seatService.verifyAndReserveSeat(projectionId, ticket.getRowNumber(), ticket.getSeatInRow());
 
         ticketJpaRepository.save(ticket);
         emailTicketSender.sendEmailWithTicket(user.getEmail(), ticket);

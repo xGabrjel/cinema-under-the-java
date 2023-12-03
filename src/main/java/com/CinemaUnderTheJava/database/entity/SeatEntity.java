@@ -19,7 +19,10 @@ public class SeatEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int rowNumber;
-    private int number;
+    private int seatInRow;
     @Enumerated(EnumType.STRING)
     private SeatStatus status;
+    @ManyToOne
+    @JoinColumn(name = "projection_id")
+    private ProjectionEntity projection;
 }
