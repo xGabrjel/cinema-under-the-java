@@ -64,18 +64,18 @@ public class UserService {
     private void checkIfEmailExists(UserRequestDto userRequestDto) {
         String userEmail = userRequestDto.email();
         if (userJpaRepository.existsByEmail(userEmail)) {
-            throw new AlreadyExistsException(EMAIL_IS_TAKEN.getMessage(), userEmail);
+            throw new AlreadyExistsException(EMAIL_IS_TAKEN.getMessage(userEmail));
         }
     }
 
     public UserResponseDto findUserDtoById(Long userId) {
         UserEntity user = userJpaRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getMessage(), userId));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getMessage(userId)));
         return userMapper.entityToDto(user);
     }
 
     public UserEntity findUserById(Long userId) {
         return userJpaRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getMessage(), userId));
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.getMessage(userId)));
     }
 }

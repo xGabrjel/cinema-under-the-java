@@ -33,7 +33,7 @@ public class SeatService {
     @Transactional
     public void verifyAndReserveSeat(Long projectionId, int rowNumber, int seatInRow) {
         ProjectionEntity projection = projectionJpaRepository.findById(projectionId)
-                .orElseThrow(() -> new NotFoundException(PROJECTION_NOT_FOUND.getMessage(), projectionId));
+                .orElseThrow(() -> new NotFoundException(PROJECTION_NOT_FOUND.getMessage(projectionId)));
         SeatEntity seat = seatJpaRepository.findByProjectionAndRowNumberAndSeatInRow(projection, rowNumber, seatInRow);
 
 
@@ -46,10 +46,10 @@ public class SeatService {
                     seatJpaRepository.save(seat);
                 }
                 case TAKEN -> throw new AlreadyExistsException(SEAT_IS_TAKEN.getMessage());
-                default -> throw new NotFoundException(SEAT_NOT_FOUND.getMessage(), rowNumber, seatInRow);
+                default -> throw new NotFoundException(SEAT_NOT_FOUND.getMessage(rowNumber, seatInRow));
             }
         } else {
-            throw new NotFoundException(SEAT_NOT_FOUND.getMessage(), rowNumber, seatInRow);
+            throw new NotFoundException(SEAT_NOT_FOUND.getMessage(rowNumber, seatInRow));
         }
     }
 }
