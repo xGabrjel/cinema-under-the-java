@@ -59,14 +59,22 @@ public class FilmService {
 
     @Transactional
     public void deleteFilm(Long id) {
-        FilmEntity film = getFilmById(id);
+        FilmEntity film = getFilmEntityById(id);
 
         log.info("Deleting film with id: [%s]".formatted(id));
         filmJpaRepository.delete(film);
         log.info("Film with id: [%s], was deleted successfully!".formatted(id));
     }
 
-    private FilmEntity getFilmById(Long id) {
+    public FilmResponseDto getFilmById(Long id) {
+        FilmEntity film = filmJpaRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));
+
+        return filmMapper.entityToDto(film);
+    }
+
+    private FilmEntity getFilmEntityById(Long id) {
         return filmJpaRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));

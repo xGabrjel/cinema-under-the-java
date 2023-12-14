@@ -13,14 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.cinemaUnderTheJava.api.controller.ProjectionController.ControllerRoutes.*;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/projections")
+@RequestMapping(ROOT)
 public class ProjectionController {
 
     private final ProjectionService projectionService;
 
-    @PostMapping("/add/{filmId}")
+    @PostMapping(SAVE)
     public ResponseEntity<ProjectionResponseDto> saveProjection(
             @RequestBody ProjectionRequestDto projectionRequestDto,
             @PathVariable Long filmId
@@ -28,25 +30,33 @@ public class ProjectionController {
         return new ResponseEntity<>(projectionService.saveProjection(projectionRequestDto, filmId), HttpStatus.CREATED);
     }
 
-    @GetMapping()
+    @GetMapping(FIND_BY_DATE)
     public ResponseEntity<List<ProjectionResponseDto>> getProjectionsByDate(
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         List<ProjectionResponseDto> result = projectionService.getProjectionsByDate(date);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/all")
+    @GetMapping(ALL)
     public ResponseEntity<List<ProjectionResponseDto>> findAll() {
         List<ProjectionResponseDto> result = projectionService.getAllProjections();
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/id")
+    @GetMapping(ID)
     public ResponseEntity<AvailableSeatsDto> getAvailableSeats(
             @PathVariable Long id
     ) {
         AvailableSeatsDto availableSeats = projectionService.getAvailableSeats(id);
         return ResponseEntity.ok(availableSeats);
+    }
+
+    static final class ControllerRoutes {
+        static final String ROOT = "/projections";
+        static final String FIND_BY_DATE = ROOT;
+        static final String SAVE = "/{filmId}";
+        static final String ALL = "/all";
+        static final String ID = "/id";
     }
 }

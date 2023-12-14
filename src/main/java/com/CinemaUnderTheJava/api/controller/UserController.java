@@ -11,22 +11,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.cinemaUnderTheJava.api.controller.UserController.ControllerRoutes.*;
+
 @RestController
-@RequestMapping("/users")
 @RequiredArgsConstructor
+@RequestMapping(ROOT)
 public class UserController {
 
     private final UserService userService;
     private final UserVerificationUtil userVerification;
 
-    @PostMapping("/registration")
+    @PostMapping(REGISTRATION)
     public ResponseEntity<NewUserDto> registration(
             @Valid @RequestBody UserRequestDto userRequestDto
     ) {
         return new ResponseEntity<>(userService.registerUser(userRequestDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(ID)
     public ResponseEntity<UserResponseDto> findByUserId(
             @PathVariable Long id
     ) {
@@ -34,11 +36,19 @@ public class UserController {
         return ResponseEntity.ok(userResponseDto);
     }
 
-    @GetMapping("/activate")
-    public ResponseEntity<String> activateUserAccount(
+    @GetMapping(ACTIVATION)
+    public ResponseEntity<String> userAccountActivation(
             @RequestParam("token") String token
     ) {
         userVerification.activateUserAccount(token);
-        return ResponseEntity.ok("Activation has benn completed!");
+        return ResponseEntity.ok("Activation has been completed!");
+    }
+
+    static final class ControllerRoutes {
+        static final String ROOT = "/users";
+        static final String REGISTRATION = "/registration";
+        static final String ID = "/{id}";
+        static final String ACTIVATION = "/activation";
     }
 }
+

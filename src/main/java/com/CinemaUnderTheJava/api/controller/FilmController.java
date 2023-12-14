@@ -12,39 +12,58 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.cinemaUnderTheJava.api.controller.FilmController.ControllerRoutes.*;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/films")
+@RequestMapping(ROOT)
 public class FilmController {
 
     private final FilmService filmService;
 
-    @GetMapping("/all")
+    @GetMapping(GET_ALL)
     public ResponseEntity<List<FilmResponseDto>> getAllFilms() {
         List<FilmResponseDto> all = filmService.getAllFilms();
-        return ResponseEntity.status(HttpStatus.OK).body(all);
+        return ResponseEntity.ok(all);
     }
 
-    @GetMapping("/category")
+    @GetMapping(CATEGORY)
     public ResponseEntity<List<FilmResponseDto>> getFilmByCategory(
             @RequestParam("category") FilmCategory filmCategory
     ) {
         List<FilmResponseDto> filmsByCategory = filmService.getFilmByCategory(filmCategory);
-        return ResponseEntity.status(HttpStatus.OK).body(filmsByCategory);
+        return ResponseEntity.ok(filmsByCategory);
     }
 
-    @PostMapping("/add")
+    @PostMapping(SAVE_NEW_FILM)
     public ResponseEntity<FilmEntity> saveNewFilm(
             @RequestBody FilmRequestDto filmRequestDto
     ) {
         return new ResponseEntity<>(filmService.saveNewFilm(filmRequestDto), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(DELETE_FILM_BY_ID)
     public ResponseEntity<Void> deleteFilm(
             @PathVariable Long id
     ) {
         filmService.deleteFilm(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(GET_BY_ID)
+    public ResponseEntity<FilmResponseDto> getFilmById(
+            @PathVariable Long id
+    ) {
+        FilmResponseDto filmResponseDto = filmService.getFilmById(id);
+        return ResponseEntity.ok(filmResponseDto);
+    }
+
+    static final class ControllerRoutes {
+        static final String ROOT = "/films";
+        static final String GET_ALL = ROOT;
+        static final String CATEGORY = "/category";
+        static final String SAVE_NEW_FILM = "/newFilm";
+        static final String DELETE_FILM_BY_ID = "/delete/{id}";
+        static final String GET_BY_ID = "/{id}";
     }
 }
