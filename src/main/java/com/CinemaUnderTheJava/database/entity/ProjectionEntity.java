@@ -16,11 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "projection")
-public class ProjectionEntity {
+public class ProjectionEntity extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private LocalDate date;
     private LocalTime time;
     @ManyToOne

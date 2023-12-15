@@ -14,11 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "seats")
-public class SeatEntity {
+public class SeatEntity extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private int rowNumber;
     private int seatInRow;
     @Enumerated(EnumType.STRING)

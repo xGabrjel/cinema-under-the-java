@@ -3,7 +3,10 @@ package com.cinemaUnderTheJava.database.entity;
 import com.cinemaUnderTheJava.database.enums.TicketCurrency;
 import com.cinemaUnderTheJava.database.enums.TicketStatus;
 import com.cinemaUnderTheJava.database.enums.TicketType;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,11 +20,9 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ticket")
-public class TicketEntity {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class TicketEntity extends AbstractUUIDEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private String filmTitle;
     private LocalDate projectionDate;

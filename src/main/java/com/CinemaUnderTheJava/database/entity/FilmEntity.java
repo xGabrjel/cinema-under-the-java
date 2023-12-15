@@ -1,7 +1,10 @@
 package com.cinemaUnderTheJava.database.entity;
 
 import com.cinemaUnderTheJava.database.enums.FilmCategory;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "film")
-public class FilmEntity {
+public class FilmEntity extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String title;
     private int filmDurationInMinutes;
     @Enumerated(EnumType.STRING)
