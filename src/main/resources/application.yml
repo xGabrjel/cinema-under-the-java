@@ -44,3 +44,7 @@ jasypt:
 
 verification:
   link: http://localhost:8080/users/confirm?token=
+
+api:
+  nbp:
+    url: http://api.nbp.pl/api/exchangerates/tables/a?format=json
