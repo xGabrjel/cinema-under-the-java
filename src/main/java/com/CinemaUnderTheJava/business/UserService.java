@@ -10,6 +10,7 @@ import com.cinemaUnderTheJava.database.entity.UserEntity;
 import com.cinemaUnderTheJava.database.enums.ActivationStatus;
 import com.cinemaUnderTheJava.database.mapper.UserMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.UserJpaRepository;
+import com.cinemaUnderTheJava.security.PasswordEncoderService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class UserService {
     private final UserJpaRepository userJpaRepository;
     private final UserMapper userMapper;
     private final UserVerificationUtil userVerification;
+    private final PasswordEncoderService passwordEncoderService;
 
     @Transactional
     public NewUserDto registerUser(UserRequestDto userRequestDto) {
@@ -48,7 +50,7 @@ public class UserService {
                 .firstName(userRequestDto.firstName())
                 .lastName(userRequestDto.lastName())
                 .email(userRequestDto.email())
-                .password(userRequestDto.password())
+                .password(passwordEncoderService.encodePassword(userRequestDto.password()))
                 .activationStatus(ActivationStatus.INACTIVE)
                 .activationToken(userVerification.createVerificationToken())
                 .role(userRequestDto.role())

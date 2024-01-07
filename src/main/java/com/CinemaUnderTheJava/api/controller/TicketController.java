@@ -29,7 +29,7 @@ public class TicketController {
     }
 
     static final class ControllerRoutes {
-        static final String ROOT = "/ticket";
+        static final String ROOT = "/tickets";
         static final String PROJECTION_ID = "/{userId}/{projectionId}";
     }
 }
