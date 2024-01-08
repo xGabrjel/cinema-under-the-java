@@ -37,7 +37,6 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.itextpdf:itextpdf:5.5.13.3'
 	implementation 'net.glxn:qrgen:1.4'
@@ -48,6 +47,9 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 tasks.named('bootBuildImage') {

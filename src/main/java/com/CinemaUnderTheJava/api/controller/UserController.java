@@ -5,7 +5,6 @@ import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
 import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
 import com.cinemaUnderTheJava.business.UserService;
 import com.cinemaUnderTheJava.business.util.UserVerificationUtil;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class UserController {
 
     @PostMapping(REGISTRATION)
     public ResponseEntity<NewUserDto> registration(
-            @Valid @RequestBody UserRequestDto userRequestDto
+            @RequestBody UserRequestDto userRequestDto
     ) {
         return new ResponseEntity<>(userService.registerUser(userRequestDto), HttpStatus.CREATED);
     }

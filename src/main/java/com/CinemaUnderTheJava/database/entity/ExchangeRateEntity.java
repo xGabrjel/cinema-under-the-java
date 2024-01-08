@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 public class ExchangeRateEntity extends AbstractEntity {
-
+    private String currency;
     private String code;
     private BigDecimal mid;
 }

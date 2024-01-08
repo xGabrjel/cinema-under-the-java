@@ -30,7 +30,7 @@ public class ProjectionController {
         return new ResponseEntity<>(projectionService.saveProjection(projectionRequestDto, filmId), HttpStatus.CREATED);
     }
 
-    @GetMapping(FIND_BY_DATE)
+    @GetMapping
     public ResponseEntity<List<ProjectionResponseDto>> getProjectionsByDate(
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
@@ -54,7 +54,6 @@ public class ProjectionController {
 
     static final class ControllerRoutes {
         static final String ROOT = "/projections";
-        static final String FIND_BY_DATE = ROOT;
         static final String SAVE = "/{filmId}";
         static final String ALL = "/all";
         static final String ID = "/id";

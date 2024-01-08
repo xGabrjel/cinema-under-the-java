@@ -38,6 +38,10 @@ spring:
           auth: true
           starttls:
             enable: true
+          ssl:
+            protocols: TLSv1.2
+            checkserveridentity: true
+            trust: smtp.poczta.onet.pl
 jasypt:
   encryptor:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
@@ -45,7 +49,7 @@ jasypt:
     password: secretkey
 
 verification:
-  link: http://localhost:8080/users/confirm?token=
+  link: http://localhost:8080/CinemaUnderTheJava/users/activation?token=
 
 api:
   nbp:

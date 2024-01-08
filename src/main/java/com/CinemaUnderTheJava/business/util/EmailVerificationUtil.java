@@ -3,6 +3,7 @@ package com.cinemaUnderTheJava.business.util;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.ResourceBundle;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class EmailVerificationUtil {
 
     private final JavaMailSender javaMailSender;
@@ -21,11 +23,9 @@ public class EmailVerificationUtil {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", Locale.getDefault());
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
-
         String mailContent = resourceBundle.getString("registration.message1")
                 + "<a href='" + url + "'>" + url + "</a>"
                 + resourceBundle.getString("registration.message2");
-
         messageHelper.setTo(sendTo);
         messageHelper.setFrom(resourceBundle.getString("registration.from"), resourceBundle.getString("registration.personal"));
         messageHelper.setSubject(resourceBundle.getString("registration.subject"));

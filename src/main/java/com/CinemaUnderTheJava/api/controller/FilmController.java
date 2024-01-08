@@ -21,7 +21,7 @@ public class FilmController {
 
     private final FilmService filmService;
 
-    @GetMapping(GET_ALL)
+    @GetMapping
     public ResponseEntity<List<FilmResponseDto>> getAllFilms() {
         List<FilmResponseDto> all = filmService.getAllFilms();
         return ResponseEntity.ok(all);
@@ -60,7 +60,6 @@ public class FilmController {
 
     static final class ControllerRoutes {
         static final String ROOT = "/films";
-        static final String GET_ALL = ROOT;
         static final String CATEGORY = "/category";
         static final String SAVE_NEW_FILM = "/newFilm";
         static final String DELETE_FILM_BY_ID = "/delete/{id}";

@@ -19,20 +19,20 @@ public class UserVerificationUtil {
 
     private final UserJpaRepository userJpaRepository;
     private final EmailVerificationUtil emailVerification;
-    @Value("$verification.link")
-    private String verificationLink;
+    @Value("${verification.link}")
+    public String verificationLink;
 
     public String createVerificationToken() {
         return UUID.randomUUID().toString();
     }
 
-    public String createVerificationLink(UserEntity user) {
+    public String createVerificationLink(UserEntity user, String verificationLink) {
         return verificationLink.concat(user.getActivationToken());
     }
 
     public void sendVerificationEmail(UserEntity user) {
         try {
-            emailVerification.sendVerificationEmail(user.getEmail(), createVerificationLink(user));
+            emailVerification.sendVerificationEmail(user.getEmail(), createVerificationLink(user, verificationLink));
         } catch (MessagingException | UnsupportedEncodingException ex) {
             log.error("Exception occurred during sending verification email", ex);
         }

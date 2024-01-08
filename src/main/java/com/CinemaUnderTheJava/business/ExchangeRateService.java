@@ -66,12 +66,14 @@ public class ExchangeRateService {
     private void checkIfRateIsAlreadyPresent(Rate rate, Optional<ExchangeRateEntity> existingExchangeRate) {
         if (existingExchangeRate.isPresent()) {
             var existing = existingExchangeRate.get();
+            existing.setCurrency(rate.currency());
             existing.setMid(rate.mid());
             exchangeRateJpaRepository.save(existing);
             log.info("Rate updated with code: [%s]".formatted(existing.getCode()));
         } else {
             var exchangeRate = ExchangeRateEntity
                     .builder()
+                    .currency(rate.currency())
                     .code(rate.code())
                     .mid(rate.mid())
                     .build();
@@ -85,6 +87,7 @@ public class ExchangeRateService {
         if (plnRate == null) {
             var newPlnExchangeRate = ExchangeRateEntity
                     .builder()
+                    .currency("Polski Złoty")
                     .code("PLN")
                     .mid(BigDecimal.valueOf(1.0))
                     .build();

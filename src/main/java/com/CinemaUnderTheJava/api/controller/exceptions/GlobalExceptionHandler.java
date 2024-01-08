@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public GenericExceptionResponse<String> handleException(Exception ex) {
-        final String message = String.format("ProjectionNotFoundException occurred: [%s]", ex.getMessage());
+        final String message = String.format("InternalServerError occurred: [%s]", ex.getMessage());
         log.error(message, ex);
         return new GenericExceptionResponse<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
