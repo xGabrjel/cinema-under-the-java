@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -47,15 +48,15 @@ public class EmailTicketSenderUtil {
         }
     }
 
-    private void sendEmailWithAttachment(String email, ResourceBundle resourceBundle, byte[] pdfBytes) throws MessagingException {
+    private void sendEmailWithAttachment(String sendTo, ResourceBundle resourceBundle, byte[] pdfBytes) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+        String mailContent = resourceBundle.getString("emailPdf.message");
 
-        messageHelper.setTo(email);
+        messageHelper.setTo(sendTo);
+        messageHelper.setFrom(resourceBundle.getString("registration.from"), resourceBundle.getString("registration.personal"));
         messageHelper.setSubject(resourceBundle.getString("emailPdf.subject"));
-        String text = resourceBundle.getString("emailPdf.message");
-        messageHelper.setText(text, true);
-
+        messageHelper.setText(mailContent, true);
         messageHelper.addAttachment("Ticket.pdf", new ByteArrayResource(pdfBytes));
 
         javaMailSender.send(message);
@@ -64,9 +65,20 @@ public class EmailTicketSenderUtil {
     private void addLogoToDocument(Document doc) throws DocumentException, IOException {
         String logoPath = "classpath:static/images/CinemaUnderTheJavaLogo.png";
         Image logo = Image.getInstance(logoPath);
-        logo.scaleToFit(600, 200);
-        logo.setSpacingBefore(0);
         logo.setAlignment(Element.ALIGN_CENTER);
+        float a4Width = PageSize.A4.getWidth();
+        float a4Height = PageSize.A4.getHeight();
+        float imageWidthToHeightRatio = 1367f / 545f;
+        float desiredHeight = a4Width / imageWidthToHeightRatio;
+
+        if (desiredHeight > a4Height) {
+            float desiredWidth = a4Height * imageWidthToHeightRatio;
+            logo.scaleAbsolute(desiredWidth, a4Height);
+        } else {
+            logo.scaleAbsolute(a4Width, desiredHeight);
+        }
+
+        logo.setAbsolutePosition(0, a4Height - desiredHeight);
         doc.add(logo);
     }
 
@@ -74,27 +86,38 @@ public class EmailTicketSenderUtil {
         Font font = new Font(Font.FontFamily.HELVETICA, 25, Font.NORMAL, BaseColor.BLACK);
         Paragraph title = new Paragraph(ticket.getFilmTitle(), font);
         title.setAlignment(Element.ALIGN_CENTER);
+        addEmptyLines(doc, 12);
         doc.add(title);
     }
 
     private void addTicketDetailsToDocument(Document doc, ResourceBundle resourceBundle, TicketEntity ticket, String email) throws DocumentException {
         Font font = new Font(Font.FontFamily.HELVETICA, 20, Font.NORMAL, BaseColor.BLACK);
+
+        addEmptyLines(doc, 1);
         doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.date"), ticket.getProjectionDate()), font));
         doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.time"), ticket.getProjectionTime()), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.name"), ticket.getName()), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.roomNumber"), ticket.getRoomNumber()), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.row"), ticket.getRowNumber()), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.seat"), ticket.getSeatInRow()), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.ticketType"), ticket.getTicketType()), font));
-        doc.add(new Paragraph(String.format("%s%s %s", resourceBundle.getString("ticket.ticketPrice"), ticket.getTicketPrice(), ticket.getTicketCurrency()), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.email"), email), font));
-        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.purchaseDate"), LocalDate.now()), font));
+        addEmptyLines(doc, 1);
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.name"), ticket.getName())));
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.roomNumber"), ticket.getRoomNumber())));
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.row"), ticket.getRowNumber())));
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.seat"), ticket.getSeatInRow())));
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.ticketType"), ticket.getTicketType())));
+        doc.add(new Paragraph(String.format("%s%s %s", resourceBundle.getString("ticket.ticketPrice"), ticket.getTicketPrice(), ticket.getTicketCurrency())));
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.email"), email)));
+        doc.add(new Paragraph(String.format("%s%s", resourceBundle.getString("ticket.purchaseDate"), LocalDate.now())));
+        addEmptyLines(doc, 2);
     }
 
     private void addQRCodeToDocument(Document doc, String email, TicketEntity ticket) throws DocumentException, IOException {
         Image qrCodeImage = (Image) qr.generateQuickResponseCode(email, ticket);
         qrCodeImage.setAlignment(Element.ALIGN_CENTER);
-        qrCodeImage.scaleToFit(280, 280);
+        qrCodeImage.scaleToFit(140, 140);
         doc.add(qrCodeImage);
+    }
+
+    private void addEmptyLines(Document doc, int lines) throws DocumentException {
+        for (int i = 0; i < lines; i++) {
+            doc.add(new Paragraph(" "));
+        }
     }
 }
