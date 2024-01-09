@@ -56,6 +56,6 @@ public class ProjectionController {
         static final String ROOT = "/projections";
         static final String SAVE = "/{filmId}";
         static final String ALL = "/all";
-        static final String ID = "/id";
+        static final String ID = "/{id}";
     }
 }
