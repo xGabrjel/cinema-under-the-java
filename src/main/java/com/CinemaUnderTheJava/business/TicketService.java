@@ -47,12 +47,12 @@ public class TicketService {
 
         ticketJpaRepository.save(ticket);
         emailTicketSender.sendEmailWithTicket(user.getEmail(), ticket);
-        log.info("Reservation Complete! The ticket has been saved. Details: [%s]".formatted(ticket));
+        log.info("Reservation Complete! The ticket has been saved. Ticket: [%s]".formatted(ticket.getFilmTitle()));
         return ticketMapper.entityToDto(ticket);
     }
 
-    private TicketEntity generateTicket(ProjectionEntity projection, TicketReservationDto ticketReservationDto, UserEntity user) {
-        log.info("Generating new ticket for projection: [%s]".formatted(projection));
+    public TicketEntity generateTicket(ProjectionEntity projection, TicketReservationDto ticketReservationDto, UserEntity user) {
+        log.info("Generating new ticket for projection: [%s]".formatted(projection.getFilm().getTitle()));
         return TicketEntity.builder()
                 .userId(user.getId())
                 .name(user.getFirstName().concat(" ").concat(user.getLastName()))
@@ -74,10 +74,10 @@ public class TicketService {
         TicketEntity ticket = getTicketById(ticketId);
         ticket.setStatus(TicketStatus.CANCELLED);
         ticketJpaRepository.delete(ticket);
-        log.info("Cancel Complete! The ticket has been cancelled. Details: [%s]".formatted(ticket));
+        log.info("Cancel Complete! The ticket has been cancelled. Details: [%s]".formatted(ticket.getFilmTitle()));
     }
 
-    private void validateReservationTiming(ProjectionEntity projection) {
+    public void validateReservationTiming(ProjectionEntity projection) {
         LocalDate currentDay = LocalDate.now();
         LocalTime currentTime = LocalTime.now();
 
@@ -97,13 +97,13 @@ public class TicketService {
         }
     }
 
-    private ProjectionEntity getProjectionById(Long projectionId) {
+    public ProjectionEntity getProjectionById(Long projectionId) {
         return projectionJpaRepository
                 .findById(projectionId)
                 .orElseThrow(() -> new NotFoundException(PROJECTION_NOT_FOUND.getMessage(projectionId)));
     }
 
-    private TicketEntity getTicketById(Long ticketId) {
+    public TicketEntity getTicketById(Long ticketId) {
         return ticketJpaRepository.findById(ticketId)
                 .orElseThrow(() -> new NotFoundException(TICKET_NOT_FOUND.getMessage(ticketId)));
     }

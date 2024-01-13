@@ -66,7 +66,7 @@ public class FilmService {
         log.info("Film with id: [%s], was deleted successfully!".formatted(id));
     }
 
-    public FilmResponseDto getFilmById(Long id) {
+    public FilmResponseDto getFilmDtoById(Long id) {
         FilmEntity film = filmJpaRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));
@@ -74,7 +74,7 @@ public class FilmService {
         return filmMapper.entityToDto(film);
     }
 
-    private FilmEntity getFilmEntityById(Long id) {
+    public FilmEntity getFilmEntityById(Long id) {
         return filmJpaRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));

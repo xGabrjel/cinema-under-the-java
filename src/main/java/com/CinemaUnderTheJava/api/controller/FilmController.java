@@ -54,7 +54,7 @@ public class FilmController {
     public ResponseEntity<FilmResponseDto> getFilmById(
             @PathVariable Long id
     ) {
-        FilmResponseDto filmResponseDto = filmService.getFilmById(id);
+        FilmResponseDto filmResponseDto = filmService.getFilmDtoById(id);
         return ResponseEntity.ok(filmResponseDto);
     }
 
