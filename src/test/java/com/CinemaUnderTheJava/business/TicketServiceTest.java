@@ -56,7 +56,7 @@ class TicketServiceTest {
     void cancelTicketShouldCancelTicket() {
         //given
         Long ticketId = 1L;
-        TicketEntity ticketEntity = EntityFixtures.someTicket();
+        TicketEntity ticketEntity = EntityFixtures.someTicketEntity();
 
         when(ticketJpaRepository.findById(ticketId)).thenReturn(Optional.of(ticketEntity));
 
@@ -140,7 +140,7 @@ class TicketServiceTest {
     void getTicketByIdShouldReturnTicketEntityIfExists() {
         //given
         Long ticketId = 1L;
-        TicketEntity ticketEntity = EntityFixtures.someTicket();
+        TicketEntity ticketEntity = EntityFixtures.someTicketEntity();
 
         when(ticketJpaRepository.findById(ticketId)).thenReturn(Optional.of(ticketEntity));
 

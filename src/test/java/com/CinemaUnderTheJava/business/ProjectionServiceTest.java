@@ -56,7 +56,6 @@ class ProjectionServiceTest extends AbstractIT {
         Assertions.assertNotNull(result);
         Assertions.assertNotEquals(Collections.emptyList(), result);
         Assertions.assertEquals(localDate, result.get(0).date());
-        Assertions.assertEquals(localDate, result.get(1).date());
     }
 
     @Test

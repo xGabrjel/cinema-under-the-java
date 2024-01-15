@@ -1,12 +1,15 @@
 package com.cinemaUnderTheJava.business.util;
 
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
+import com.cinemaUnderTheJava.database.entity.ExchangeRateEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.enums.TicketType;
+import com.cinemaUnderTheJava.database.repository.jpa.ExchangeRateJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.DayOfWeek;
 
 import static com.cinemaUnderTheJava.business.util.PriceCalculatorUtil.TicketPrice.*;
@@ -15,8 +18,12 @@ import static com.cinemaUnderTheJava.business.util.PriceCalculatorUtil.TicketPri
 @AllArgsConstructor
 public class PriceCalculatorUtil {
 
+    private final ExchangeRateJpaRepository exchangeRateJpaRepository;
+
     public BigDecimal calculatePriceForProjection(ProjectionEntity projection, TicketReservationDto ticketReservationDto) {
-        return BigDecimal.valueOf(verifyStudentDiscount(projection, ticketReservationDto));
+        ExchangeRateEntity exchangeRate = exchangeRateJpaRepository.findByCode(ticketReservationDto.ticketCurrency().toString());
+        BigDecimal finalPrice = BigDecimal.valueOf(verifyStudentDiscount(projection, ticketReservationDto)).divide(exchangeRate.getMid(), RoundingMode.HALF_UP);
+        return finalPrice.setScale(1, RoundingMode.HALF_UP);
     }
 
     private int wednesdayDiscount(ProjectionEntity projection) {

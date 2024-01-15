@@ -52,7 +52,7 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static TicketEntity someTicket() {
+    public static TicketEntity someTicketEntity() {
         return TicketEntity
                 .builder()
                 .name(someUserEntity().getFirstName())
@@ -67,6 +67,15 @@ public class EntityFixtures {
                 .status(TicketStatus.ACTIVE)
                 .ticketType(TicketType.NORMAL)
                 .ticketCurrency(TicketCurrency.PLN)
+                .build();
+    }
+
+    public static ExchangeRateEntity someExchangeRateEntity() {
+        return ExchangeRateEntity
+                .builder()
+                .currency("Polski Złoty")
+                .code("PLN")
+                .mid(BigDecimal.ONE)
                 .build();
     }
 }
