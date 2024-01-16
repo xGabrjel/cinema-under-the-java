@@ -7,11 +7,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@With
 @Entity
 @Getter
 @Setter
 @Builder
-@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "projection")
@@ -21,7 +21,7 @@ public class ProjectionEntity extends AbstractEntity {
     private LocalTime time;
     @ManyToOne
     private FilmEntity film;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "projection_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SeatEntity> seats;
 }

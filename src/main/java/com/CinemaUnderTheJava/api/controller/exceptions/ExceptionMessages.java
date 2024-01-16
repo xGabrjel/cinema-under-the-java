@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum ExceptionMessages {
+
     FILM_NOT_FOUND("The film you were looking for was not found! Ticket ID: "),
     DUPLICATE_FILM("The film with this title already exists! Title: "),
 
@@ -22,7 +23,6 @@ public enum ExceptionMessages {
 
     SEAT_NOT_FOUND("The seat you were looking for was not found. Row and Seat: "),
     SEAT_IS_TAKEN("The seat you were looking for was already taken.");
-
 
     private final String message;
 

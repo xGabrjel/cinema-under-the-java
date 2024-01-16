@@ -45,12 +45,13 @@ class PriceCalculatorUtilTest {
                 .withTicketCurrency(TicketCurrency.PLN);
 
         ExchangeRateEntity exchangeRateEntity = EntityFixtures.someExchangeRateEntity();
+        BigDecimal expectedPrice = BigDecimal.valueOf(15)
+                .divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP)
+                .setScale(1, RoundingMode.HALF_UP);
 
-        BigDecimal expectedPrice = BigDecimal.valueOf(15).divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP).setScale(1, RoundingMode.HALF_UP);
-
-        //when
         when(exchangeRateJpaRepository.findByCode("PLN")).thenReturn(exchangeRateEntity);
 
+        //when
         BigDecimal result = priceCalculatorUtil.calculatePriceForProjection(projection, ticket);
 
         //then
@@ -68,12 +69,13 @@ class PriceCalculatorUtilTest {
                 .withTicketCurrency(TicketCurrency.PLN);
 
         ExchangeRateEntity exchangeRateEntity = EntityFixtures.someExchangeRateEntity();
+        BigDecimal expectedPrice = BigDecimal.valueOf(20)
+                .divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP)
+                .setScale(1, RoundingMode.HALF_UP);
 
-        BigDecimal expectedPrice = BigDecimal.valueOf(20).divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP).setScale(1, RoundingMode.HALF_UP);
-
-        //when
         when(exchangeRateJpaRepository.findByCode("PLN")).thenReturn(exchangeRateEntity);
 
+        //when
         BigDecimal result = priceCalculatorUtil.calculatePriceForProjection(projection, ticket);
 
         //then
@@ -91,12 +93,13 @@ class PriceCalculatorUtilTest {
                 .withTicketCurrency(TicketCurrency.PLN);
 
         ExchangeRateEntity exchangeRateEntity = EntityFixtures.someExchangeRateEntity();
+        BigDecimal expectedPrice = BigDecimal.valueOf(25)
+                .divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP)
+                .setScale(1, RoundingMode.HALF_UP);
 
-        BigDecimal expectedPrice = BigDecimal.valueOf(25).divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP).setScale(1, RoundingMode.HALF_UP);
-
-        //when
         when(exchangeRateJpaRepository.findByCode("PLN")).thenReturn(exchangeRateEntity);
 
+        //when
         BigDecimal result = priceCalculatorUtil.calculatePriceForProjection(projection, ticket);
 
         //then
@@ -114,12 +117,13 @@ class PriceCalculatorUtilTest {
                 .withTicketCurrency(TicketCurrency.PLN);
 
         ExchangeRateEntity exchangeRateEntity = EntityFixtures.someExchangeRateEntity();
+        BigDecimal expectedPrice = BigDecimal.valueOf(30)
+                .divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP)
+                .setScale(1, RoundingMode.HALF_UP);
 
-        BigDecimal expectedPrice = BigDecimal.valueOf(30).divide(BigDecimal.valueOf(1), RoundingMode.HALF_UP).setScale(1, RoundingMode.HALF_UP);
-
-        //when
         when(exchangeRateJpaRepository.findByCode("PLN")).thenReturn(exchangeRateEntity);
 
+        //when
         BigDecimal result = priceCalculatorUtil.calculatePriceForProjection(projection, ticket);
 
         //then

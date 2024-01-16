@@ -11,12 +11,13 @@ import com.cinemaUnderTheJava.database.mapper.FilmMapper;
 import com.cinemaUnderTheJava.database.repository.jpa.FilmJpaRepository;
 import com.cinemaUnderTheJava.fixtures.DtoFixtures;
 import lombok.AllArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class FilmServiceTest extends AbstractIT {
@@ -32,11 +33,11 @@ class FilmServiceTest extends AbstractIT {
         List<FilmResponseDto> allFilms = filmService.getAllFilms();
 
         //then
-        Assertions.assertNotNull(allFilms);
-        Assertions.assertNotEquals(Collections.emptyList(), allFilms);
-        Assertions.assertEquals("The Shawshank Redemption", allFilms.get(0).title());
-        Assertions.assertEquals(FilmCategory.DRAMA, allFilms.get(0).category());
-        Assertions.assertEquals(142, allFilms.get(0).filmDurationInMinutes());
+        assertNotNull(allFilms);
+        assertNotEquals(Collections.emptyList(), allFilms);
+        assertEquals("The Shawshank Redemption", allFilms.get(0).title());
+        assertEquals(FilmCategory.DRAMA, allFilms.get(0).category());
+        assertEquals(142, allFilms.get(0).filmDurationInMinutes());
     }
 
     @Test
@@ -48,9 +49,9 @@ class FilmServiceTest extends AbstractIT {
         List<FilmResponseDto> result = filmService.getFilmByCategory(horror);
 
         //then
-        Assertions.assertNotNull(result);
-        Assertions.assertNotEquals(Collections.emptyList(), result);
-        Assertions.assertEquals(horror, result.get(0).category());
+        assertNotNull(result);
+        assertNotEquals(Collections.emptyList(), result);
+        assertEquals(horror, result.get(0).category());
     }
 
     @Test
@@ -62,10 +63,10 @@ class FilmServiceTest extends AbstractIT {
         FilmEntity result = filmService.saveNewFilm(filmRequestDto);
 
         //then
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(filmRequestDto.category(), result.getCategory());
-        Assertions.assertEquals(filmRequestDto.title(), result.getTitle());
-        Assertions.assertEquals(filmRequestDto.filmDurationInMinutes(), result.getFilmDurationInMinutes());
+        assertNotNull(result);
+        assertEquals(filmRequestDto.category(), result.getCategory());
+        assertEquals(filmRequestDto.title(), result.getTitle());
+        assertEquals(filmRequestDto.filmDurationInMinutes(), result.getFilmDurationInMinutes());
     }
 
     @Test
@@ -77,7 +78,7 @@ class FilmServiceTest extends AbstractIT {
                 .withFilmDurationInMinutes(152);
 
         //when, then
-        Assertions.assertThrows(DuplicateException.class, () -> filmService.saveNewFilm(alreadySavedFilm));
+        assertThrows(DuplicateException.class, () -> filmService.saveNewFilm(alreadySavedFilm));
     }
 
     @Test
@@ -89,10 +90,10 @@ class FilmServiceTest extends AbstractIT {
         FilmResponseDto result = filmService.getFilmDtoById(filmId);
 
         //then
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals("The Shawshank Redemption", result.title());
-        Assertions.assertEquals(FilmCategory.DRAMA, result.category());
-        Assertions.assertEquals(142, result.filmDurationInMinutes());
+        assertNotNull(result);
+        assertEquals("The Shawshank Redemption", result.title());
+        assertEquals(FilmCategory.DRAMA, result.category());
+        assertEquals(142, result.filmDurationInMinutes());
     }
 
     @Test
@@ -104,22 +105,22 @@ class FilmServiceTest extends AbstractIT {
         FilmEntity result = filmService.getFilmEntityById(filmId);
 
         //then
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals("The Shawshank Redemption", result.getTitle());
-        Assertions.assertEquals(FilmCategory.DRAMA, result.getCategory());
-        Assertions.assertEquals(142, result.getFilmDurationInMinutes());
+        assertNotNull(result);
+        assertEquals("The Shawshank Redemption", result.getTitle());
+        assertEquals(FilmCategory.DRAMA, result.getCategory());
+        assertEquals(142, result.getFilmDurationInMinutes());
     }
 
     @Test
     void getFilmDtoByIdThrowsExceptionCorrectly() {
         //given, when, then
-        Assertions.assertThrows(NotFoundException.class, () -> filmService.getFilmDtoById(999L));
+        assertThrows(NotFoundException.class, () -> filmService.getFilmDtoById(999L));
     }
 
     @Test
     void getFilmEntityThrowsExceptionCorrectly() {
         //given, when, then
-        Assertions.assertThrows(NotFoundException.class, () -> filmService.getFilmEntityById(999L));
+        assertThrows(NotFoundException.class, () -> filmService.getFilmEntityById(999L));
     }
 
     @Test
@@ -131,6 +132,6 @@ class FilmServiceTest extends AbstractIT {
         filmService.deleteFilm(filmId);
 
         //then
-        Assertions.assertThrows(NotFoundException.class, () -> filmService.getFilmDtoById(filmId));
+        assertThrows(NotFoundException.class, () -> filmService.getFilmDtoById(filmId));
     }
 }

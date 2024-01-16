@@ -42,6 +42,7 @@ public class TicketService {
         UserEntity user = userService.findUserById(userId);
         ProjectionEntity projection = getProjectionById(projectionId);
         validateReservationTiming(projection);
+
         TicketEntity ticket = generateTicket(projection, ticketReservationDto, user);
         seatService.verifyAndReserveSeat(projectionId, ticket.getRowNumber(), ticket.getSeatInRow());
 

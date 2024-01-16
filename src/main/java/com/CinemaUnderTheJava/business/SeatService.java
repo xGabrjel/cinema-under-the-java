@@ -23,11 +23,12 @@ public class SeatService {
     private final SeatJpaRepository seatJpaRepository;
 
     public SeatEntity generateSeat(int rowNumber, int seatInRow, SeatStatus seatStatus) {
-        SeatEntity seat = new SeatEntity();
-        seat.setRowNumber(rowNumber);
-        seat.setSeatInRow(seatInRow);
-        seat.setStatus(seatStatus);
-        return seat;
+        return SeatEntity
+                .builder()
+                .rowNumber(rowNumber)
+                .seatInRow(seatInRow)
+                .status(seatStatus)
+                .build();
     }
 
     @Transactional
@@ -35,7 +36,6 @@ public class SeatService {
         ProjectionEntity projection = projectionJpaRepository.findById(projectionId)
                 .orElseThrow(() -> new NotFoundException(PROJECTION_NOT_FOUND.getMessage(projectionId)));
         SeatEntity seat = seatJpaRepository.findByProjectionAndRowNumberAndSeatInRow(projection, rowNumber, seatInRow);
-
 
         if (seat != null) {
             SeatStatus status = seat.getStatus();

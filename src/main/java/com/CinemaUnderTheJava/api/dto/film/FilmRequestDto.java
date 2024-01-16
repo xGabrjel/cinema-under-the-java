@@ -4,8 +4,8 @@ import com.cinemaUnderTheJava.database.enums.FilmCategory;
 import lombok.Builder;
 import lombok.With;
 
-@Builder
 @With
+@Builder
 public record FilmRequestDto(
         String title,
         FilmCategory category,

@@ -5,8 +5,9 @@ import lombok.With;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-@Builder
+
 @With
+@Builder
 public record ProjectionRequestDto(
         LocalDate date,
         LocalTime time

@@ -8,11 +8,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.*;
 
+@With
 @Entity
 @Getter
 @Setter
 @Builder
-@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "app_user")

@@ -38,15 +38,16 @@ public class UserService {
         UserEntity user = createUser(userRequestDto);
         userJpaRepository.save(user);
         log.info("User registered successfully: [%s]".formatted(user.getEmail()));
+
         userVerification.sendVerificationEmail(user);
         log.info("Verification email was send successfully!");
-
         return userMapper.newUserEntityToDto(user);
     }
 
     private UserEntity createUser(UserRequestDto userRequestDto) {
         log.info("Creating new User data: [%s]".formatted(userRequestDto));
-        return UserEntity.builder()
+        return UserEntity
+                .builder()
                 .firstName(userRequestDto.firstName())
                 .lastName(userRequestDto.lastName())
                 .email(userRequestDto.email())

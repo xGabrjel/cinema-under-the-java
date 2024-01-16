@@ -9,10 +9,10 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.UUID;
 
-@MappedSuperclass
 @Getter
-@FieldNameConstants
 @ToString
+@MappedSuperclass
+@FieldNameConstants
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class AbstractUUIDEntity extends AbstractEntity {
 

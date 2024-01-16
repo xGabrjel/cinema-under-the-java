@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExchangeRateJpaRepository extends JpaRepository<ExchangeRateEntity, Long> {
+
     ExchangeRateEntity findByCode(String code);
 }

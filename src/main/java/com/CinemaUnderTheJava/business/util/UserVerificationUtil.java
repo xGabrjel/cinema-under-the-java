@@ -39,6 +39,8 @@ public class UserVerificationUtil {
     }
 
     public void activateUserAccount(String token) {
+
+        log.info("Activating user account by token: [%s]".formatted(token));
         userJpaRepository.findByActivationToken(token)
                 .ifPresentOrElse(user -> {
                             user.setActivationStatus(ActivationStatus.ACTIVE);

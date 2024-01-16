@@ -20,8 +20,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ExchangeRateService {
 
     private final WebClient webClient;
@@ -38,6 +38,7 @@ public class ExchangeRateService {
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
+
             processCurrencyData(result);
         } catch (Exception ex) {
             log.error("Exception while finding data: [%s]".formatted(ex));

@@ -14,9 +14,10 @@ import com.cinemaUnderTheJava.fixtures.DtoFixtures;
 import com.cinemaUnderTheJava.security.PasswordEncoderService;
 import jakarta.validation.ValidationException;
 import lombok.AllArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class UserServiceTest extends AbstractIT {
@@ -37,10 +38,10 @@ class UserServiceTest extends AbstractIT {
         NewUserDto newUserDto = userService.registerUser(userRequestDto);
 
         //then
-        Assertions.assertNotNull(newUserDto);
-        Assertions.assertEquals(userRequestDto.email(), newUserDto.email());
-        Assertions.assertEquals(userRequestDto.firstName(), newUserDto.firstName());
-        Assertions.assertEquals(userRequestDto.lastName(), newUserDto.lastName());
+        assertNotNull(newUserDto);
+        assertEquals(userRequestDto.email(), newUserDto.email());
+        assertEquals(userRequestDto.firstName(), newUserDto.firstName());
+        assertEquals(userRequestDto.lastName(), newUserDto.lastName());
     }
 
     @Test
@@ -51,7 +52,7 @@ class UserServiceTest extends AbstractIT {
                 .withRepeatedPassword("IncorrectPassword");
 
         //when, then
-        Assertions.assertThrows(ValidationException.class, () -> userService.registerUser(userRequestDto));
+        assertThrows(ValidationException.class, () -> userService.registerUser(userRequestDto));
     }
 
     @Test
@@ -65,7 +66,7 @@ class UserServiceTest extends AbstractIT {
                 .withEmail(alreadyRegisteredUser.email());
 
         //when, then
-        Assertions.assertThrows(AlreadyExistsException.class, () -> userService.registerUser(userRequestDto2));
+        assertThrows(AlreadyExistsException.class, () -> userService.registerUser(userRequestDto2));
     }
 
     @Test
@@ -80,7 +81,7 @@ class UserServiceTest extends AbstractIT {
         UserResponseDto result = userService.findUserDtoById(alreadyRegisteredUser.id());
 
         //then
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
     }
 
     @Test
@@ -95,18 +96,18 @@ class UserServiceTest extends AbstractIT {
         UserEntity result = userService.findUserById(alreadyRegisteredUser.id());
 
         //then
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
     }
 
     @Test
     void findUserDtoByIdThrowsExceptionCorrectly() {
         //given, when, then
-        Assertions.assertThrows(NotFoundException.class, () -> userService.findUserDtoById(997L));
+        assertThrows(NotFoundException.class, () -> userService.findUserDtoById(997L));
     }
 
     @Test
     void findUserByIdThrowsExceptionCorrectly() {
         //given, when, then
-        Assertions.assertThrows(NotFoundException.class, () -> userService.findUserById(997L));
+        assertThrows(NotFoundException.class, () -> userService.findUserById(997L));
     }
 }

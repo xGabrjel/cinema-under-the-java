@@ -5,8 +5,8 @@ import com.cinemaUnderTheJava.database.enums.TicketType;
 import lombok.Builder;
 import lombok.With;
 
-@Builder
 @With
+@Builder
 public record TicketReservationDto(
         TicketType ticketType,
         TicketCurrency ticketCurrency,

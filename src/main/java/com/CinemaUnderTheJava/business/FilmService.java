@@ -71,10 +71,12 @@ public class FilmService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));
 
+        log.info("Getting film by id: [%s]".formatted(id));
         return filmMapper.entityToDto(film);
     }
 
     public FilmEntity getFilmEntityById(Long id) {
+        log.info("Getting film by id: [%s]".formatted(id));
         return filmJpaRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(FILM_NOT_FOUND.getMessage(id)));

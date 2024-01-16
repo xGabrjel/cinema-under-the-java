@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.1.6'
-	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id 'io.spring.dependency-management' version "${springDependencyManagement}"
 	id 'jacoco'
 }
 
@@ -24,40 +24,33 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.flywaydb:flyway-core'
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	implementation "com.itextpdf:itextpdf:${itextpdfVersion}"
+	implementation "net.glxn:qrgen:${qrgenVersion}"
+	implementation "com.google.zxing:core:${zxingVersion}"
+	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:${jasyptVersion}"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${starterMvcVersion}"
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	runtimeOnly 'org.postgresql:postgresql'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
 	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${mapstructBindingVersion}"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:postgresql'
-
-	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'com.itextpdf:itextpdf:5.5.13.3'
-	implementation 'net.glxn:qrgen:1.4'
-	implementation 'com.google.zxing:core:3.5.2'
-	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
-
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-
-	testImplementation 'org.slf4j:slf4j-api:2.0.7'
-	testImplementation 'io.rest-assured:rest-assured:5.3.1'
-
-
+	testImplementation "org.slf4j:slf4j-api:${slf4jApiVersion}"
+	testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
 }
 
 tasks.named('bootBuildImage') {
@@ -81,7 +74,7 @@ jar {
 }
 
 jacoco {
-	toolVersion = '0.8.8'
+	toolVersion = "${jacocoToolVersion}"
 }
 
 jacocoTestReport {

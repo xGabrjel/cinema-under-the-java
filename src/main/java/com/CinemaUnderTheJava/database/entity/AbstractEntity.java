@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
-@MappedSuperclass
 @Getter
+@MappedSuperclass
 @NoArgsConstructor
 @FieldNameConstants
 public class AbstractEntity {

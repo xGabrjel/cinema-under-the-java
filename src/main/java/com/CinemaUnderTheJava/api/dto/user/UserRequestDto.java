@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.With;
 
-@Builder
 @With
+@Builder
 public record UserRequestDto(
         @NotBlank
         String firstName,

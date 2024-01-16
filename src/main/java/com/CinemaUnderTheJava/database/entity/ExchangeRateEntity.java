@@ -7,13 +7,14 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "exchangeRate")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "exchangeRate")
 public class ExchangeRateEntity extends AbstractEntity {
+
     private String currency;
     private String code;
     private BigDecimal mid;

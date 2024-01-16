@@ -11,7 +11,6 @@ import com.cinemaUnderTheJava.database.repository.jpa.FilmJpaRepository;
 import com.cinemaUnderTheJava.database.repository.jpa.ProjectionJpaRepository;
 import com.cinemaUnderTheJava.fixtures.DtoFixtures;
 import lombok.AllArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class ProjectionServiceTest extends AbstractIT {
@@ -33,17 +34,17 @@ class ProjectionServiceTest extends AbstractIT {
     @Test
     void saveProjectionWorkCorrectly() {
         //given
+        long longId = 1;
         ProjectionRequestDto projectionRequestDto = DtoFixtures.someProjectionRequestDto()
                 .withTime(LocalTime.of(15, 10));
-        long longId = 1;
 
         //when
         ProjectionResponseDto savedProjection = projectionService.saveProjection(projectionRequestDto, longId);
 
         //then
-        Assertions.assertNotNull(savedProjection);
-        Assertions.assertEquals(projectionRequestDto.date(), savedProjection.date());
-        Assertions.assertEquals(projectionRequestDto.time(), savedProjection.time());
+        assertNotNull(savedProjection);
+        assertEquals(projectionRequestDto.date(), savedProjection.date());
+        assertEquals(projectionRequestDto.time(), savedProjection.time());
     }
 
     @Test
@@ -55,9 +56,9 @@ class ProjectionServiceTest extends AbstractIT {
         List<ProjectionResponseDto> result = projectionService.getProjectionsByDate(localDate);
 
         //then
-        Assertions.assertNotNull(result);
-        Assertions.assertNotEquals(Collections.emptyList(), result);
-        Assertions.assertEquals(localDate, result.get(0).date());
+        assertNotNull(result);
+        assertNotEquals(Collections.emptyList(), result);
+        assertEquals(localDate, result.get(0).date());
     }
 
     @Test
@@ -66,7 +67,7 @@ class ProjectionServiceTest extends AbstractIT {
         LocalDate localDate = LocalDate.of(3024,1,15);
 
         //when, then
-        Assertions.assertThrows(NotFoundException.class, () -> projectionService.getProjectionsByDate(localDate));
+        assertThrows(NotFoundException.class, () -> projectionService.getProjectionsByDate(localDate));
     }
 
     @Test
@@ -75,7 +76,7 @@ class ProjectionServiceTest extends AbstractIT {
         List<ProjectionResponseDto> result = projectionService.getAllProjections();
 
         //then
-        Assertions.assertNotEquals(Collections.emptyList(), result);
+        assertNotEquals(Collections.emptyList(), result);
     }
 
     @Test
@@ -87,8 +88,8 @@ class ProjectionServiceTest extends AbstractIT {
         AvailableSeatsDto result = projectionService.getAvailableSeats(projectionId);
 
         //then
-        Assertions.assertNotNull(result);
-        Assertions.assertNotEquals(Collections.emptyList(), result.seats());
+        assertNotNull(result);
+        assertNotEquals(Collections.emptyList(), result.seats());
     }
 
     @Test
@@ -97,6 +98,6 @@ class ProjectionServiceTest extends AbstractIT {
         long projectionId = 999;
 
         //when, then
-        Assertions.assertThrows(NotFoundException.class, () -> projectionService.getAvailableSeats(projectionId));
+        assertThrows(NotFoundException.class, () -> projectionService.getAvailableSeats(projectionId));
     }
 }

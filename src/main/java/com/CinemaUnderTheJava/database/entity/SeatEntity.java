@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+@With
 @Entity
 @Getter
 @Setter
 @Builder
-@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "seats")
@@ -20,7 +20,7 @@ public class SeatEntity extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private SeatStatus status;
     @ManyToOne
-    @JoinColumn(name = "projection_id")
     @JsonIgnore
+    @JoinColumn(name = "projection_id")
     private ProjectionEntity projection;
 }
