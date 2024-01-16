@@ -12,7 +12,7 @@ public interface UserControllerTestSupport {
 
     RequestSpecification requestSpecification();
 
-    default void getUserById(final long id) {
+    default void getUserByIdSupport(final long id) {
         requestSpecification()
                 .when()
                 .get("/users/" + id)
@@ -22,7 +22,7 @@ public interface UserControllerTestSupport {
                 .body(notNullValue());
     }
 
-    default void activateAccountByToken(final String token) {
+    default void activateAccountByTokenSupport(final String token) {
         requestSpecification()
                 .when()
                 .get("users/activation?token=" + token)
@@ -32,7 +32,7 @@ public interface UserControllerTestSupport {
     }
 
 
-    default void registerUser(final UserRequestDto userRequestDto) {
+    default void registerUserSupport(final UserRequestDto userRequestDto) {
         requestSpecification()
                 .given()
                 .contentType(ContentType.JSON)

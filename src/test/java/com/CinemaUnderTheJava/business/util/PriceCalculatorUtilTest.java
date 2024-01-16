@@ -1,6 +1,7 @@
 package com.cinemaUnderTheJava.business.util;
 
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
+import com.cinemaUnderTheJava.business.ExchangeRateService;
 import com.cinemaUnderTheJava.database.entity.ExchangeRateEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.enums.TicketCurrency;
@@ -26,6 +27,9 @@ class PriceCalculatorUtilTest {
 
     @Mock
     private ExchangeRateJpaRepository exchangeRateJpaRepository;
+
+    @Mock
+    private ExchangeRateService exchangeRateService;
 
     @InjectMocks
     private PriceCalculatorUtil priceCalculatorUtil;

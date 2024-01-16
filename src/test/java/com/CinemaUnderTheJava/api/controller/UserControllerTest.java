@@ -14,7 +14,7 @@ class UserControllerTest extends RestAssureConfigurationTestBase implements User
         long userId = 999;
 
         //when, then
-        getUserById(userId);
+        getUserByIdSupport(userId);
     }
 
     @Test
@@ -23,7 +23,7 @@ class UserControllerTest extends RestAssureConfigurationTestBase implements User
         String activationToken = "testToken";
 
         //when, then
-        activateAccountByToken(activationToken);
+        activateAccountByTokenSupport(activationToken);
     }
 
     @Test
@@ -32,6 +32,6 @@ class UserControllerTest extends RestAssureConfigurationTestBase implements User
         UserRequestDto user = DtoFixtures.someUserRequestDto();
 
         //when, then
-        registerUser(user);
+        registerUserSupport(user);
     }
 }

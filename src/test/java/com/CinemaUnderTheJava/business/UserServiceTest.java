@@ -30,7 +30,8 @@ class UserServiceTest extends AbstractIT {
     @Test
     void registerUserShouldRegisterNewUserCorrectly() {
         //given
-        UserRequestDto userRequestDto = DtoFixtures.someUserRequestDto();
+        UserRequestDto userRequestDto = DtoFixtures.someUserRequestDto()
+                .withEmail("userServiceTest@gmail.com");
 
         //when
         NewUserDto newUserDto = userService.registerUser(userRequestDto);
@@ -100,12 +101,12 @@ class UserServiceTest extends AbstractIT {
     @Test
     void findUserDtoByIdThrowsExceptionCorrectly() {
         //given, when, then
-        Assertions.assertThrows(NotFoundException.class, () -> userService.findUserDtoById(999L));
+        Assertions.assertThrows(NotFoundException.class, () -> userService.findUserDtoById(997L));
     }
 
     @Test
     void findUserByIdThrowsExceptionCorrectly() {
         //given, when, then
-        Assertions.assertThrows(NotFoundException.class, () -> userService.findUserById(999L));
+        Assertions.assertThrows(NotFoundException.class, () -> userService.findUserById(997L));
     }
 }

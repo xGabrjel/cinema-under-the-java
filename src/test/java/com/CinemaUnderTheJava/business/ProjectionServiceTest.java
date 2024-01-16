@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,8 @@ class ProjectionServiceTest extends AbstractIT {
     @Test
     void saveProjectionWorkCorrectly() {
         //given
-        ProjectionRequestDto projectionRequestDto = DtoFixtures.someProjectionRequestDto();
+        ProjectionRequestDto projectionRequestDto = DtoFixtures.someProjectionRequestDto()
+                .withTime(LocalTime.of(15, 10));
         long longId = 1;
 
         //when

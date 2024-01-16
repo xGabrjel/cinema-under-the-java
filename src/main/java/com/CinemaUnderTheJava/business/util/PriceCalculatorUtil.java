@@ -1,6 +1,7 @@
 package com.cinemaUnderTheJava.business.util;
 
 import com.cinemaUnderTheJava.api.dto.ticket.TicketReservationDto;
+import com.cinemaUnderTheJava.business.ExchangeRateService;
 import com.cinemaUnderTheJava.database.entity.ExchangeRateEntity;
 import com.cinemaUnderTheJava.database.entity.ProjectionEntity;
 import com.cinemaUnderTheJava.database.enums.TicketType;
@@ -19,8 +20,10 @@ import static com.cinemaUnderTheJava.business.util.PriceCalculatorUtil.TicketPri
 public class PriceCalculatorUtil {
 
     private final ExchangeRateJpaRepository exchangeRateJpaRepository;
+    private final ExchangeRateService exchangeRateService;
 
     public BigDecimal calculatePriceForProjection(ProjectionEntity projection, TicketReservationDto ticketReservationDto) {
+        exchangeRateService.getCurrencyData();
         ExchangeRateEntity exchangeRate = exchangeRateJpaRepository.findByCode(ticketReservationDto.ticketCurrency().toString());
         BigDecimal finalPrice = BigDecimal.valueOf(verifyStudentDiscount(projection, ticketReservationDto)).divide(exchangeRate.getMid(), RoundingMode.HALF_UP);
         return finalPrice.setScale(1, RoundingMode.HALF_UP);
