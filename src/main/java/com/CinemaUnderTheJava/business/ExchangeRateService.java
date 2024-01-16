@@ -78,7 +78,7 @@ public class ExchangeRateService {
                     .mid(rate.mid())
                     .build();
             exchangeRateJpaRepository.save(exchangeRate);
-            log.info("New rate was saved with code: [%s]".formatted(exchangeRate.getCode()));
+            log.info("New rate was saved with code: [%s] and mid: [%s]".formatted(exchangeRate.getCode(), exchangeRate.getMid()));
         }
     }
 
