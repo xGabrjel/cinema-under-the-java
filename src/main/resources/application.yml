@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 2504
   servlet:
     context-path: /CinemaUnderTheJava
 
@@ -49,7 +49,7 @@ jasypt:
     password: secretkey
 
 verification:
-  link: http://localhost:8080/CinemaUnderTheJava/users/activation?token=
+  link: http://localhost:2505/CinemaUnderTheJava/users/activation?token=
 
 api:
   nbp:
