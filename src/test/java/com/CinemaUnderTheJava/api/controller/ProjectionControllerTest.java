@@ -23,7 +23,7 @@ class ProjectionControllerTest extends RestAssureConfigurationTestBase implement
     @Test
     void gettingProjectionsByDateWorksCorrectly() {
         //given
-        LocalDate localDate = LocalDate.of(2024,1, 30);
+        LocalDate localDate = LocalDate.of(2026,1, 30);
 
         //when, then
         getProjectionSupport(localDate);

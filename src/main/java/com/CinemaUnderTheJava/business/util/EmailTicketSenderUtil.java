@@ -8,6 +8,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -63,8 +64,9 @@ public class EmailTicketSenderUtil {
     }
 
     private void addLogoToDocument(Document doc) throws DocumentException, IOException {
-        String logoPath = "classpath:static/images/CinemaUnderTheJavaLogo.png";
-        Image logo = Image.getInstance(logoPath);
+        String logoPath = "static/images/CinemaUnderTheJavaLogo.PNG";
+        ClassPathResource classPathResource = new ClassPathResource(logoPath);
+        Image logo = Image.getInstance(classPathResource.getURL());
         logo.setAlignment(Element.ALIGN_CENTER);
         float a4Width = PageSize.A4.getWidth();
         float a4Height = PageSize.A4.getHeight();

@@ -1,5 +1,6 @@
 package com.cinemaUnderTheJava.api.dto.projection;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.With;
 
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 @Builder
 public record ProjectionRequestDto(
         LocalDate date,
+        @JsonFormat(pattern = "HH:mm")
         LocalTime time
 ) {
 }

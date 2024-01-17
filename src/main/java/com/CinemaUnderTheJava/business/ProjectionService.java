@@ -40,9 +40,10 @@ public class ProjectionService {
         FilmEntity filmEntity = getFilmById(filmId);
         projectionValidator.projectionInputValidation(projectionRequestDto, filmEntity);
 
-        ProjectionEntity projectionEntity = projectionMapper.dtoToEntity(projectionRequestDto);
-        projectionEntity.setFilm(filmEntity);
-        projectionEntity.setSeats(generateNewSeats());
+        ProjectionEntity projectionEntity = projectionMapper.dtoToEntity(projectionRequestDto)
+                .withFilm(filmEntity)
+                .withSeats(generateNewSeats());
+
         ProjectionEntity savedProjection = projectionJpaRepository.save(projectionEntity);
 
         log.info("Projection saved successfully: Id: [%s], Date: [%s], Time: [%s]"

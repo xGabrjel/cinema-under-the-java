@@ -50,7 +50,7 @@ class ProjectionServiceTest extends AbstractIT {
     @Test
     void getProjectionsByDateWorksCorrectly() {
         //given
-        LocalDate localDate = LocalDate.of(2024,1,15);
+        LocalDate localDate = LocalDate.of(2026,1,15);
 
         //when
         List<ProjectionResponseDto> result = projectionService.getProjectionsByDate(localDate);
