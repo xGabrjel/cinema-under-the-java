@@ -5,11 +5,13 @@ import com.cinemaUnderTheJava.api.dto.user.UserRequestDto;
 import com.cinemaUnderTheJava.api.dto.user.UserResponseDto;
 import com.cinemaUnderTheJava.business.UserService;
 import com.cinemaUnderTheJava.business.util.UserVerificationUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.cinemaUnderTheJava.api.controller.UserController.ControllerOperationSummary.*;
 import static com.cinemaUnderTheJava.api.controller.UserController.ControllerRoutes.*;
 
 @RestController
@@ -21,6 +23,7 @@ public class UserController {
     private final UserVerificationUtil userVerification;
 
     @PostMapping(REGISTRATION)
+    @Operation(summary = REGISTER_A_NEW_USER)
     public ResponseEntity<NewUserDto> registration(
             @RequestBody UserRequestDto userRequestDto
     ) {
@@ -28,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping(ID)
+    @Operation(summary = RETRIEVE_USER_INFORMATION_MESSAGE)
     public ResponseEntity<UserResponseDto> findByUserId(
             @PathVariable Long id
     ) {
@@ -36,6 +40,7 @@ public class UserController {
     }
 
     @GetMapping(ACTIVATION)
+    @Operation(summary = ACTIVATE_USER_ACCOUNT_MESSAGE)
     public ResponseEntity<String> userAccountActivation(
             @RequestParam("token") String token
     ) {
@@ -48,6 +53,12 @@ public class UserController {
         static final String REGISTRATION = "/registration";
         static final String ID = "/{id}";
         static final String ACTIVATION = "/activation";
+    }
+
+    static final class ControllerOperationSummary {
+        static final String REGISTER_A_NEW_USER = "Register a new user";
+        static final String RETRIEVE_USER_INFORMATION_MESSAGE = "Retrieve user information by ID";
+        static final String ACTIVATE_USER_ACCOUNT_MESSAGE = "Activate user account based on the provided token";
     }
 }
 
