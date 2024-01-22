@@ -11,13 +11,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.cinemaUnderTheJava.api.controller.UserController.ControllerOperationSummary.*;
-import static com.cinemaUnderTheJava.api.controller.UserController.ControllerRoutes.*;
+import static com.cinemaUnderTheJava.api.controller.UserController.ROOT;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ROOT)
 public class UserController {
+
+    static final String ROOT = "/users";
+    static final String REGISTRATION = "/registration";
+    static final String ID = "/{id}";
+    static final String ACTIVATION = "/activation";
+
+    static final String REGISTER_A_NEW_USER = "Register a new user";
+    static final String RETRIEVE_USER_INFORMATION_MESSAGE = "Retrieve user information by ID";
+    static final String ACTIVATE_USER_ACCOUNT_MESSAGE = "Activate user account based on the provided token";
 
     private final UserService userService;
     private final UserVerificationUtil userVerification;
@@ -46,19 +54,6 @@ public class UserController {
     ) {
         userVerification.activateUserAccount(token);
         return ResponseEntity.ok("Activation has been completed!");
-    }
-
-    static final class ControllerRoutes {
-        static final String ROOT = "/users";
-        static final String REGISTRATION = "/registration";
-        static final String ID = "/{id}";
-        static final String ACTIVATION = "/activation";
-    }
-
-    static final class ControllerOperationSummary {
-        static final String REGISTER_A_NEW_USER = "Register a new user";
-        static final String RETRIEVE_USER_INFORMATION_MESSAGE = "Retrieve user information by ID";
-        static final String ACTIVATE_USER_ACCOUNT_MESSAGE = "Activate user account based on the provided token";
     }
 }
 

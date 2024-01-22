@@ -10,14 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.cinemaUnderTheJava.api.controller.TicketController.ControllerOperationMessages.RESERVE_TICKET_MESSAGE;
-import static com.cinemaUnderTheJava.api.controller.TicketController.ControllerRoutes.PROJECTION_ID;
-import static com.cinemaUnderTheJava.api.controller.TicketController.ControllerRoutes.ROOT;
+import static com.cinemaUnderTheJava.api.controller.TicketController.ROOT;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ROOT)
 public class TicketController {
+
+    static final String ROOT = "/tickets";
+    static final String PROJECTION_ID = "/{userId}/{projectionId}";
+
+    static final String RESERVE_TICKET_MESSAGE = "Reserve a ticket for a specific projection";
 
     private final TicketService ticketService;
 
@@ -29,14 +32,5 @@ public class TicketController {
             @PathVariable Long userId
     ) throws MessagingException {
         return new ResponseEntity<>(ticketService.reserveTicket(projectionId, ticketReservationDto, userId), HttpStatus.CREATED);
-    }
-
-    static final class ControllerRoutes {
-        static final String ROOT = "/tickets";
-        static final String PROJECTION_ID = "/{userId}/{projectionId}";
-    }
-
-    static final class ControllerOperationMessages {
-        static final String RESERVE_TICKET_MESSAGE = "Reserve a ticket for a specific projection";
     }
 }

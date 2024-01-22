@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.cinemaUnderTheJava.api.controller.ExchangeRateController.ControllerOperationSummary.FIND_ALL_CURRENCIES_MESSAGE;
+import static com.cinemaUnderTheJava.api.controller.ExchangeRateController.ROOT;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(ExchangeRateController.ControllerRoutes.ROOT)
+@RequestMapping(ROOT)
 public class ExchangeRateController {
+
+    static final String ROOT = "/codes";
+    static final String FIND_ALL_CURRENCIES_MESSAGE = "Get all current exchange rates from the NBP - National Bank of Poland";
 
     private final ExchangeRateService exchangeRateService;
 
@@ -25,13 +28,5 @@ public class ExchangeRateController {
     public ResponseEntity<List<ExchangeRateResponseDto>> findAllCurrencies() {
         List<ExchangeRateResponseDto> body = exchangeRateService.findAllCurrency();
         return ResponseEntity.ok(body);
-    }
-
-    static final class ControllerRoutes {
-        static final String ROOT = "/codes";
-    }
-
-    static final class ControllerOperationSummary {
-        static final String FIND_ALL_CURRENCIES_MESSAGE = "Get all current exchange rates from the NBP - National Bank of Poland";
     }
 }

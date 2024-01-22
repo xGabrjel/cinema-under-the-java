@@ -13,13 +13,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.cinemaUnderTheJava.api.controller.FilmController.ControllerOperationSummary.*;
-import static com.cinemaUnderTheJava.api.controller.FilmController.ControllerRoutes.*;
+import static com.cinemaUnderTheJava.api.controller.FilmController.ROOT;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ROOT)
 public class FilmController {
+
+    static final String ROOT = "/films";
+    static final String CATEGORY = "/category";
+    static final String SAVE_NEW_FILM = "/newFilm";
+    static final String DELETE_FILM_BY_ID = "/delete/{id}";
+    static final String GET_BY_ID = "/{id}";
+
+    static final String GET_ALL_FILMS_MESSAGE = "Get all films";
+    static final String GET_FILM_BY_CATEGORY_MESSAGE = "Get films by category";
+    static final String SAVE_NEW_FILM_MESSAGE = "Save a new film";
+    static final String DELETE_FILM_BY_ID_MESSAGE = "Delete a film by ID";
+    static final String GET_BY_ID_MESSAGE = "Get a film by ID";
 
     private final FilmService filmService;
 
@@ -63,21 +74,5 @@ public class FilmController {
     ) {
         FilmResponseDto filmResponseDto = filmService.getFilmDtoById(id);
         return ResponseEntity.ok(filmResponseDto);
-    }
-
-    static final class ControllerRoutes {
-        static final String ROOT = "/films";
-        static final String CATEGORY = "/category";
-        static final String SAVE_NEW_FILM = "/newFilm";
-        static final String DELETE_FILM_BY_ID = "/delete/{id}";
-        static final String GET_BY_ID = "/{id}";
-    }
-
-    static final class ControllerOperationSummary {
-        static final String GET_ALL_FILMS_MESSAGE = "Get all films";
-        static final String GET_FILM_BY_CATEGORY_MESSAGE = "Get films by category";
-        static final String SAVE_NEW_FILM_MESSAGE = "Save a new film";
-        static final String DELETE_FILM_BY_ID_MESSAGE = "Delete a film by ID";
-        static final String GET_BY_ID_MESSAGE = "Get a film by ID";
     }
 }

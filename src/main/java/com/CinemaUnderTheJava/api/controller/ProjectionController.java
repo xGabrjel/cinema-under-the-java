@@ -14,14 +14,22 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.cinemaUnderTheJava.api.controller.ProjectionController.ControllerOperationSummary.*;
-import static com.cinemaUnderTheJava.api.controller.ProjectionController.ControllerRoutes.*;
+import static com.cinemaUnderTheJava.api.controller.ProjectionController.ROOT;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ROOT)
 public class ProjectionController {
 
+    static final String ROOT = "/projections";
+    static final String SAVE = "/{filmId}";
+    static final String ALL = "/all";
+    static final String ID = "/{id}";
+
+    static final String SAVE_PROJECTION_MESSAGE = "Save a new projection for a film";
+    static final String GET_PROJECTION_BY_DATE_MESSAGE = "Get projections for a specific date";
+    static final String GET_ALL_MESSAGE = "Get all projections";
+    static final String GET_AVAILABLE_SEATS_MESSAGE = "Get available seats for a specific projection";
     private final ProjectionService projectionService;
 
     @PostMapping(SAVE)
@@ -56,19 +64,5 @@ public class ProjectionController {
     ) {
         AvailableSeatsDto availableSeats = projectionService.getAvailableSeats(id);
         return ResponseEntity.ok(availableSeats);
-    }
-
-    static final class ControllerRoutes {
-        static final String ROOT = "/projections";
-        static final String SAVE = "/{filmId}";
-        static final String ALL = "/all";
-        static final String ID = "/{id}";
-    }
-
-    static final class ControllerOperationSummary {
-        static final String SAVE_PROJECTION_MESSAGE = "Save a new projection for a film";
-        static final String GET_PROJECTION_BY_DATE_MESSAGE = "Get projections for a specific date";
-        static final String GET_ALL_MESSAGE = "Get all projections";
-        static final String GET_AVAILABLE_SEATS_MESSAGE = "Get available seats for a specific projection";
     }
 }

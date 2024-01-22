@@ -38,11 +38,15 @@ However, it's worth noting that the Mapstruct library generates a substantial am
 code coverage achieved by tests. Despite the convenience offered by this library, I am considering manual mapping of entities to DTOs and vice versa
 to avoid excessive testing of mappers.
 
-To generate a code coverage report, the JaCoCo Java Code Coverage Library was used. The code coverage is: 89%/80% (Instructions/Branches) which is
+To generate a code coverage report, the JaCoCo Java Code Coverage Library was used. The code coverage is: 90%/80% (Instructions/Branches) which is
 presented below.
 
 <h1 align="center">
   <a><img src="src/main/resources/static/images/JacocoReport.PNG" alt="Cinema Under The Java"></a>
+</h1>
+
+<h1 align="center">
+  <a><img src="src/main/resources/static/images/CodeCoverage.PNG" alt="Cinema Under The Java"></a>
 </h1>
 
 ## 📚 Technology Stack
